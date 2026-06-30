@@ -1,6 +1,6 @@
 # Validation
 
-Run commands from `D:\M_Work\frontend-engineering-starter`.
+Run commands from the repository root.
 
 ## Core
 
