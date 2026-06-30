@@ -1,0 +1,23 @@
+# Copy this file to `.github/CODEOWNERS` in the real GitHub repository and
+# replace `@your-org/frontend-platform` with the actual owning team.
+
+* @your-org/frontend-platform
+
+.github/ @your-org/frontend-platform
+.husky/ @your-org/frontend-platform
+scripts/ @your-org/frontend-platform
+package.json @your-org/frontend-platform
+pnpm-lock.yaml @your-org/frontend-platform
+
+packages/contracts/ @your-org/frontend-platform
+packages/ui/ @your-org/frontend-platform
+
+apps/web/src/router/ @your-org/frontend-platform
+apps/web/src/shared/api/ @your-org/frontend-platform
+apps/web/src/shared/auth/ @your-org/frontend-platform
+apps/web/src/shared/config/ @your-org/frontend-platform
+apps/web/src/shared/runtime/ @your-org/frontend-platform
+
+docs/*STANDARD.md @your-org/frontend-platform
+docs/GIT_MERGE_GATES.md @your-org/frontend-platform
+docs/GITHUB_BRANCH_PROTECTION.md @your-org/frontend-platform

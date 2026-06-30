@@ -1,0 +1,73 @@
+:root,
+[data-theme='default'] {
+  color-scheme: light;
+  --ui-color-bg: #f5f7f8;
+  --ui-color-surface: #ffffff;
+  --ui-color-surface-muted: #fbfcfc;
+  --ui-color-border: #e4e7ec;
+  --ui-color-border-strong: #cbd5dc;
+  --ui-color-text: #172026;
+  --ui-color-text-muted: #667085;
+  --ui-color-text-subtle: #8a97a3;
+  --ui-color-accent-primary: #2f6f73;
+  --ui-color-accent-secondary: #6b7a55;
+  --ui-color-accent-soft: #e4f1f0;
+  --ui-color-info: #315f7d;
+  --ui-color-success: #24715a;
+  --ui-color-warning: #9a6700;
+  --ui-color-danger: #b42318;
+  --ui-color-code-bg: #f6f8f9;
+  --ui-color-canvas-grid: #f0f2f3;
+  --ui-color-sidebar-bg: #142126;
+  --ui-color-sidebar-surface: #203238;
+  --ui-color-sidebar-hover: #243940;
+  --ui-color-sidebar-border: #31464d;
+  --ui-color-sidebar-mark-border: #4b6268;
+  --ui-color-sidebar-text: #f3f6f7;
+  --ui-color-sidebar-link: #cfdbde;
+  --ui-color-sidebar-muted: #aebec3;
+  --ui-color-sidebar-accent: #d7f0ee;
+  --ui-color-sidebar-active-text: #ffffff;
+  --ui-shadow-focus: 0 0 0 2px rgba(47, 111, 115, 0.14);
+  --ui-radius-xs: 3px;
+  --ui-radius-sm: 4px;
+  --ui-radius-md: 6px;
+  --ui-radius-lg: 8px;
+  --ui-space-1: 4px;
+  --ui-space-2: 8px;
+  --ui-space-3: 12px;
+  --ui-space-4: 16px;
+  --ui-space-5: 20px;
+  --ui-space-6: 24px;
+  --ui-font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --ui-font-mono: 'Cascadia Mono', Consolas, 'SFMono-Regular', monospace;
+  --ui-font-size-caption: 12px;
+  --ui-font-size-body: 13px;
+  --ui-font-size-title: 16px;
+  --ui-font-size-page-title: 22px;
+  --ui-line-height-body: 1.55;
+  --el-color-primary: var(--ui-color-accent-primary);
+  --el-border-radius-base: var(--ui-radius-md);
+  --af-bg: var(--ui-color-bg);
+  --af-panel: var(--ui-color-surface);
+  --af-ink: var(--ui-color-text);
+  --af-muted: var(--ui-color-text-muted);
+  --af-subtle: var(--ui-color-border);
+  --af-accent: var(--ui-color-accent-primary);
+  --af-accent-weak: var(--ui-color-accent-soft);
+  --af-warning: var(--ui-color-warning);
+  --af-danger: var(--ui-color-danger);
+}
+
+[data-theme='operations'] {
+  --ui-color-accent-primary: #365f73;
+  --ui-color-accent-secondary: #6b6d56;
+  --ui-color-accent-soft: #e8eef1;
+}
+
+[data-theme='agent'] {
+  --ui-color-accent-primary: #2f6f73;
+  --ui-color-accent-secondary: #7a6b42;
+  --ui-color-accent-soft: #e4f1f0;
+}
