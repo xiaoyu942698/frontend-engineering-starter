@@ -57,15 +57,18 @@ Key front-end foundations:
 
 ## Codex Entry
 
-让 Codex 接入开发时，把入口固定在根目录 `AGENTS.md`。这是本仓库给 Codex 的必走规则文件。
+Codex 接入开发时，入口固定在根目录 `AGENTS.md`。这是本仓库给 Codex 的必走规则文件。
 
-给 Codex 派活时可以直接这样说：
+实际使用时，使用者只需要描述开发任务，例如“新增一个审批页面”或“修复登录权限问题”。使用者不需要背规范，也不需要每次提醒 Codex 怎么写代码。
 
-```text
-先阅读并遵守根目录 AGENTS.md。新增模块优先使用 pnpm scaffold:feature。提交前必须运行对应验证命令，不允许使用 --no-verify，不允许绕过 pnpm verify、pnpm test:coverage、pnpm verify:e2e 或 check:gates。
-```
+规范入口由 Codex 自己承担：
 
-Codex 需要按 `AGENTS.md` 再去查具体规则文档，例如架构边界、API、组件、测试、安全、性能、可访问性和 Git 门禁。不要让 Codex 只看某个页面文件就直接改。
+- Codex 接到任务后，必须先读根目录 `AGENTS.md`。
+- Codex 再按 `AGENTS.md` 路由到具体规则文档，例如架构边界、API、组件、测试、安全、性能、可访问性和 Git 门禁。
+- 新增模块时，Codex 优先使用 `pnpm scaffold:feature` 生成标准骨架，再接入 route、API、权限、UI 和测试。
+- 提交前，Codex 必须自己运行对应验证命令；不允许使用 `--no-verify`，也不允许绕过 `pnpm verify`、`pnpm test:coverage`、`pnpm verify:e2e` 或 `check:gates`。
+
+一句话：使用者只管提需求，Codex 必须自己从 `AGENTS.md` 进入工程化规则。
 
 ## Commands
 

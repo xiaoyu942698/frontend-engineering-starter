@@ -4,6 +4,8 @@
 
 This file is the mandatory entry point for Codex work in this repository. Before changing code, Codex must use this file to route itself to the relevant docs, scripts, and verification commands.
 
+Ordinary users only need to describe the development task. Do not require users to repeat these rules in their prompt; Codex must apply this entrypoint by itself.
+
 Do not bypass this file by editing from a single source file alone. If a task touches UI, API, runtime, auth, tests, CI, dependencies, or Git workflow, follow the matching section below and the referenced document under `docs/`.
 
 ## Project Positioning
