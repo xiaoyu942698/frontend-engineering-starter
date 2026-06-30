@@ -61,6 +61,8 @@ requireScript('test:coverage', scripts['test:coverage'], [
 ]);
 requireScript('verify:e2e', scripts['verify:e2e'], ['@agent-flow/web', 'test:e2e']);
 requireScript('check:gates', scripts['check:gates'], ['scripts/check-gate-closure.mjs']);
+requireScript('scaffold:feature', scripts['scaffold:feature'], ['scripts/scaffold-feature.mjs']);
+requireScript('protect:github', scripts['protect:github'], ['scripts/configure-github-branch-protection.mjs']);
 
 const preCommit = readText('.husky/pre-commit');
 requireIncludes('.husky/pre-commit', preCommit, 'pnpm precommit', 'local commit gate must run precommit');
@@ -80,6 +82,10 @@ requireIncludes(
   'CI must install locked deps'
 );
 requireIncludes('.github/workflows/ci.yml', ciWorkflow, 'pnpm verify', 'CI must run deterministic verify');
+requireIncludes('.github/workflows/ci.yml', ciWorkflow, 'coverage:', 'CI must expose a required coverage job');
+requireIncludes('.github/workflows/ci.yml', ciWorkflow, 'pnpm test:coverage', 'CI must run coverage gates');
+requireIncludes('.github/workflows/ci.yml', ciWorkflow, 'e2e:', 'CI must expose a required e2e job');
+requireIncludes('.github/workflows/ci.yml', ciWorkflow, 'pnpm verify:e2e', 'CI must run e2e smoke gates');
 
 const codexWorkflow = readText('.github/workflows/codex-review.yml');
 requireIncludes('.github/workflows/codex-review.yml', codexWorkflow, 'openai/codex-action@v1', 'Codex review action');
@@ -132,6 +138,13 @@ requireIncludes(
 requireIncludes(
   '.github/codex/prompts/review.md',
   codexPrompt,
+  'pnpm test:coverage',
+  'review must require coverage evidence'
+);
+requireIncludes('.github/codex/prompts/review.md', codexPrompt, 'pnpm verify:e2e', 'review must require e2e evidence');
+requireIncludes(
+  '.github/codex/prompts/review.md',
+  codexPrompt,
   'naming/comment/file-size',
   'review must check standards gates'
 );
@@ -168,6 +181,18 @@ requireIncludes(
   'Codex Review / codex_review',
   'PR must expose Codex required check'
 );
+requireIncludes(
+  '.github/pull_request_template.md',
+  pullRequestTemplate,
+  'CI / coverage',
+  'PR must expose coverage required check'
+);
+requireIncludes(
+  '.github/pull_request_template.md',
+  pullRequestTemplate,
+  'CI / e2e',
+  'PR must expose e2e required check'
+);
 
 const codeOwnersExample = readText('.github/CODEOWNERS.example');
 requireIncludes(
@@ -188,6 +213,33 @@ requireIncludes(
   codeOwnersExample,
   'apps/web/src/shared/auth/',
   'auth owner must be documented'
+);
+
+const codeOwners = readText('.github/CODEOWNERS');
+requireIncludes('.github/CODEOWNERS', codeOwners, 'packages/contracts/', 'contracts owner must be enforced');
+requireIncludes('.github/CODEOWNERS', codeOwners, 'packages/ui/', 'ui owner must be enforced');
+requireIncludes('.github/CODEOWNERS', codeOwners, 'apps/web/src/shared/api/', 'api owner must be enforced');
+requireIncludes('.github/CODEOWNERS', codeOwners, 'apps/web/src/shared/auth/', 'auth owner must be enforced');
+requireIncludes('.github/CODEOWNERS', codeOwners, 'apps/web/src/shared/runtime/', 'runtime owner must be enforced');
+
+const branchProtectionScript = readText('scripts/configure-github-branch-protection.mjs');
+requireIncludes(
+  'scripts/configure-github-branch-protection.mjs',
+  branchProtectionScript,
+  'Codex Review / codex_review',
+  'branch protection script must configure Codex review'
+);
+requireIncludes(
+  'scripts/configure-github-branch-protection.mjs',
+  branchProtectionScript,
+  'CI / coverage',
+  'branch protection script must configure coverage'
+);
+requireIncludes(
+  'scripts/configure-github-branch-protection.mjs',
+  branchProtectionScript,
+  'require_code_owner_reviews: true',
+  'branch protection script must require code owner reviews'
 );
 
 const agentGuide = readText('AGENTS.md');
@@ -213,6 +265,10 @@ requireIncludes(
 requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'OPENAI_API_KEY', 'Codex review secret must be documented');
 requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, '--no-verify', 'AI bypass policy must be documented');
 requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'pnpm lint:engineering', 'engineering gate must be documented');
+requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'CI / coverage', 'coverage required check must be documented');
+requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'CI / e2e', 'e2e required check must be documented');
+requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'pnpm test:coverage', 'coverage command must be documented');
+requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'pnpm verify:e2e', 'e2e command must be documented');
 
 const branchProtectionDoc = readText('docs/GITHUB_BRANCH_PROTECTION.md');
 requireIncludes(
@@ -226,6 +282,18 @@ requireIncludes(
   branchProtectionDoc,
   'Codex Review / codex_review',
   'branch protection must require Codex review'
+);
+requireIncludes(
+  'docs/GITHUB_BRANCH_PROTECTION.md',
+  branchProtectionDoc,
+  'CI / coverage',
+  'branch protection must require coverage'
+);
+requireIncludes(
+  'docs/GITHUB_BRANCH_PROTECTION.md',
+  branchProtectionDoc,
+  'CI / e2e',
+  'branch protection must require e2e'
 );
 requireIncludes(
   'docs/GITHUB_BRANCH_PROTECTION.md',

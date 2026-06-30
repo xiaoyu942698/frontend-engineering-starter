@@ -55,12 +55,16 @@ pnpm verify
 ```powershell
 pnpm install --frozen-lockfile
 pnpm verify
+pnpm test:coverage
+pnpm verify:e2e
 ```
 
 仓库分支保护必须把以下 checks 设置为 required：
 
 ```text
 CI / verify
+CI / coverage
+CI / e2e
 Codex Review / codex_review
 ```
 
@@ -74,7 +78,7 @@ Codex Review / codex_review
 
 - `package.json` 的 `precommit`、`test`、`verify` 和 `check:gates` 脚本。
 - `.husky/pre-commit`、`.husky/commit-msg`、`.husky/pre-push`。
-- `.github/workflows/ci.yml` 是否运行 `pnpm verify`。
+- `.github/workflows/ci.yml` 是否运行 `pnpm verify`、`pnpm test:coverage` 和 `pnpm verify:e2e`。
 - `.github/workflows/codex-review.yml` 是否运行 Codex Review 并强制 `MERGE_DECISION`。
 - `.github/codex/prompts/review.md` 是否检查 AI 绕过、标准门禁和验证证据。
 - `.github/pull_request_template.md` 是否暴露验证和 AI 禁绕过确认项。
@@ -82,22 +86,22 @@ Codex Review / codex_review
 
 新增工程化规则时必须同步 `pnpm lint:engineering`，并保证 `pnpm check:gates` 能检测规则入口没有被删除。
 
-## 可选本地增强门禁
+## 覆盖率与 E2E 门禁
 
-当前模板提供两个不进入默认 `pnpm verify` 的本地增强命令：
+当前模板把核心覆盖率和 E2E smoke 拆成独立 required checks：
 
 ```powershell
 pnpm test:coverage
 pnpm verify:e2e
 ```
 
-使用建议：
+规则：
 
-- 修改 `packages/contracts`、`shared/api`、`shared/auth`、`shared/runtime` 时运行 `pnpm test:coverage`。
-- 修改路由、权限、运行流、审批、artifact 或可见页面流程时运行 `pnpm verify:e2e`。
-- 真实项目稳定后，可把它们拆成独立 GitHub Actions required checks。
+- `pnpm test:coverage` 对 contracts、mock runtime、web shared/api/auth/runtime/store 设置覆盖率阈值。
+- `pnpm verify:e2e` 对桌面和移动端 Agent Studio 主流程做 smoke 验证。
+- 本地改动涉及核心链路或可见流程时，应在提交前先跑对应命令；CI 会在 PR 中强制重跑。
 
-该命令会被 `pnpm precommit` 和 `pnpm verify` 调用。修改门禁相关文件时，必须先让它通过。
+这两个命令由 CI 独立 job 调用，不内联进 `pnpm verify`，避免本地默认验证过重。修改门禁相关文件时，必须先让 `pnpm check:gates` 通过。
 
 ## Codex Code Review
 

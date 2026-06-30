@@ -1,5 +1,11 @@
 # Project Guide for Codex
 
+## Required Entry
+
+This file is the mandatory entry point for Codex work in this repository. Before changing code, Codex must use this file to route itself to the relevant docs, scripts, and verification commands.
+
+Do not bypass this file by editing from a single source file alone. If a task touches UI, API, runtime, auth, tests, CI, dependencies, or Git workflow, follow the matching section below and the referenced document under `docs/`.
+
 ## Project Positioning
 
 `agent-flow-starter` is a framework-neutral Agent front-end starter. It is not a SaaS landing page and not a single fixed dashboard. The project should provide a reusable UI framework layer plus Agent runtime capability components that can be composed into task-session, workflow-console, audit, approval, or artifact views.
@@ -40,6 +46,7 @@
 - Follow `docs/GIT_MERGE_GATES.md` for commit, push, CI, and Codex review gate requirements.
 - Follow `docs/GITHUB_BRANCH_PROTECTION.md` when configuring remote required checks.
 - Use `docs/FRONTEND_MODULE_TEMPLATE.md` when adding pages or modules.
+- Prefer `pnpm scaffold:feature <feature-name> --title <title> --permission <domain:action>` for new feature modules, then wire the route intentionally.
 - Route-level auth and permissions must use route meta plus `apps/web/src/router` guards.
 - HTTP calls must go through `apps/web/src/shared/api/client.ts`; feature components must not call Axios directly.
 - Loading, empty, and error states should reuse `UiStateBlock` or Element Plus primitives according to the frontend standard.
@@ -59,6 +66,7 @@
 - Check that new or modified source files stay within documented line and byte limits.
 - Check architecture/API/component/security/performance/accessibility rules when the PR touches those areas.
 - Check that `pnpm lint`, `pnpm test`, `pnpm build`, and `pnpm check:gates` evidence is included before recommending merge.
+- Check that `pnpm test:coverage` and `pnpm verify:e2e` evidence is included before recommending merge when touching required checks or the covered surfaces.
 - Treat any AI-authored commit, push, or merge that used `--no-verify` or bypassed required checks as merge-blocking.
 
 ## UI Standard
@@ -88,6 +96,7 @@ pnpm --filter @agent-flow/web test
 pnpm typecheck
 pnpm build
 pnpm check:gates
+pnpm verify:e2e
 ```
 
 For UI changes, also run or manually smoke the app at `http://127.0.0.1:5178`.

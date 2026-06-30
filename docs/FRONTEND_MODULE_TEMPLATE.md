@@ -1,6 +1,23 @@
 # 新前端模块模板
 
-复制本文档中的片段创建新页面或新业务模块。真实代码放在 `apps/web/src/features/<feature>`，通用能力优先复用 `shared`、`packages/ui` 和 `packages/contracts`。
+优先用脚手架创建新页面或新业务模块，再按本文档扩展真实业务逻辑。真实代码放在 `apps/web/src/features/<feature>`，通用能力优先复用 `shared`、`packages/ui` 和 `packages/contracts`。
+
+## 脚手架入口
+
+```powershell
+pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read
+```
+
+脚手架会生成：
+
+- `index.ts`
+- `routes.ts`
+- `schema.ts`
+- `queries/<feature>-queries.ts`
+- `pages/<FeaturePage>.vue`
+- `tests/<feature>.spec.ts`
+
+脚手架不会自动修改 `apps/web/src/router/index.ts`。接入新页面前，开发者必须人工确认路由层级、权限码、导航入口和测试范围。
 
 ## 目录模板
 

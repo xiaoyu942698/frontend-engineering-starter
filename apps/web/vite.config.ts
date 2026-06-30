@@ -20,6 +20,24 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['tests/setup.ts'],
     include: ['tests/**/*.spec.ts', 'src/**/*.test.ts'],
-    exclude: ['e2e/**']
+    exclude: ['e2e/**'],
+    coverage: {
+      provider: 'v8',
+      all: true,
+      include: [
+        'src/shared/api/**/*.ts',
+        'src/shared/auth/**/*.ts',
+        'src/shared/config/**/*.ts',
+        'src/shared/runtime/**/*.ts',
+        'src/stores/**/*.ts',
+        'src/features/studio/queries/**/*.ts'
+      ],
+      thresholds: {
+        statements: 80,
+        branches: 70,
+        functions: 80,
+        lines: 80
+      }
+    }
   }
 });

@@ -35,6 +35,38 @@ Key front-end foundations:
 - `apps/web/src/shared/auth`: route/action permission helpers and `v-permission`.
 - `packages/ui`: design tokens, layout primitives, timeline/KV components, and `UiStateBlock`.
 
+## How To Use
+
+这个仓库不是某一种业务系统模板，而是一套前端工程化底座。后面可以长成后台、Agent 产品、运营工具或别的系统，但新增代码都先按同一套基础规矩来。
+
+最常用流程：
+
+1. 安装依赖：`pnpm install`
+2. 本地启动：`pnpm dev`
+3. 新增模块：`pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read`
+4. 手动把新模块 route 接入 `apps/web/src/router/index.ts`
+5. 开发时请求走 `shared/api`，权限走 route meta 和 `v-permission`，UI 优先用 Element Plus 和 `packages/ui`
+6. 提交前跑：`pnpm verify`
+7. 改了核心链路或可见流程时，加跑：`pnpm test:coverage` 和 `pnpm verify:e2e`
+
+记住三条硬规则：
+
+- 组件里不要直接写 `axios`，统一走 `apps/web/src/shared/api`。
+- 不要在业务页面里新建一套颜色、按钮、弹窗或表格体系，先用 Element Plus 和 UI token。
+- 新模块不要手写散乱目录，先用 `pnpm scaffold:feature` 生成骨架。
+
+## Codex Entry
+
+让 Codex 接入开发时，把入口固定在根目录 `AGENTS.md`。这是本仓库给 Codex 的必走规则文件。
+
+给 Codex 派活时可以直接这样说：
+
+```text
+先阅读并遵守根目录 AGENTS.md。新增模块优先使用 pnpm scaffold:feature。提交前必须运行对应验证命令，不允许使用 --no-verify，不允许绕过 pnpm verify、pnpm test:coverage、pnpm verify:e2e 或 check:gates。
+```
+
+Codex 需要按 `AGENTS.md` 再去查具体规则文档，例如架构边界、API、组件、测试、安全、性能、可访问性和 Git 门禁。不要让 Codex 只看某个页面文件就直接改。
+
 ## Commands
 
 ```powershell
@@ -46,6 +78,8 @@ pnpm test
 pnpm test:coverage
 pnpm build
 pnpm verify:e2e
+pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read
+pnpm protect:github --branch main
 ```
 
 Development URLs:
@@ -72,10 +106,13 @@ GitHub branch protection setup lives in `docs/GITHUB_BRANCH_PROTECTION.md`.
 - Commit format: Conventional Commits, enforced by commitlint.
 - Pre-commit: lint-staged formats changed files, runs ESLint/Stylelint auto-fix, focused type checks, naming/comment/file-size checks, engineering-rule checks, and gate-closure checks.
 - Pre-push: `pnpm verify`.
-- CI: `.github/workflows/ci.yml` runs `pnpm verify`; `.github/workflows/codex-review.yml` runs Codex review.
-- Gate closure: `pnpm check:gates` verifies hooks, workflows, Codex review prompt, PR template, AI bypass rules, and required-check documentation are still present.
-- Optional local gates: `pnpm test:coverage` generates coverage for core packages; `pnpm verify:e2e` runs the web Playwright smoke suite.
-- Ownership template: `.github/CODEOWNERS.example` documents critical directories that should require owner review in the real GitHub repository.
+- CI: `.github/workflows/ci.yml` exposes `CI / verify`, `CI / coverage`, and `CI / e2e`; `.github/workflows/codex-review.yml` exposes `Codex Review / codex_review`.
+- Gate closure: `pnpm check:gates` verifies hooks, workflows, Codex review prompt, PR template, CODEOWNERS, AI bypass rules, and required-check documentation are still present.
+- Coverage gate: `pnpm test:coverage` enforces core contracts, mock runtime, and web shared/auth/api/runtime/store coverage thresholds.
+- E2E gate: `pnpm verify:e2e` runs desktop and mobile Playwright smoke tests against the web app and mock API.
+- Ownership: `.github/CODEOWNERS` protects critical directories; `.github/CODEOWNERS.example` is only a downstream replacement template.
+- Module scaffold: `pnpm scaffold:feature <feature-name> --title <中文标题> --permission <domain:action>` creates the standard feature skeleton.
+- Remote protection: `pnpm protect:github --branch main` applies required checks and Code Owner review through the GitHub API when the operator has admin permission and the GitHub plan supports branch protection.
 - New shared frontend behavior belongs in `packages/ui` only when it is a thin adapter, layout shell, token, or cross-project composition helper.
 
 ## Code Structure Analysis

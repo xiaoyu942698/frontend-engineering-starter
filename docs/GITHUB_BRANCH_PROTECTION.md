@@ -35,19 +35,16 @@ release/*
 
 ```text
 CI / verify
+CI / coverage
+CI / e2e
 Codex Review / codex_review
 ```
 
-项目稳定后可以考虑增加：
-
-```text
-CI / verify:e2e
-CI / test:coverage
-```
-
-不要在真实运行夹具和执行时长未稳定前把 E2E 或 coverage 设为 required。
-
 `CI / verify` 是确定性工程收口，负责 format、lint、typecheck、命名/注释/文件大小、test 和 build。
+
+`CI / coverage` 是核心链路覆盖率收口，负责 contracts、mock runtime、web shared/api/auth/runtime/store 的覆盖率阈值。
+
+`CI / e2e` 是桌面和移动端主流程 smoke 收口，负责验证 web 与 mock API 可以启动并进入审批态。
 
 `Codex Review / codex_review` 是 AI 合规收口，负责检查架构边界、规则绕过、验证可信度和 `MERGE_DECISION`。
 
@@ -67,6 +64,8 @@ OPENAI_API_KEY
 
 - PR 来自非保护分支。
 - `CI / verify` 通过。
+- `CI / coverage` 通过。
+- `CI / e2e` 通过。
 - `Codex Review / codex_review` 通过。
 - PR conversations 已解决。
 - 没有 AI-assisted `--no-verify`、跳过 Husky、跳过 `pnpm verify` 或绕过 required checks 的记录。
@@ -79,6 +78,26 @@ OPENAI_API_KEY
 ```powershell
 pnpm check:gates
 pnpm verify
+pnpm test:coverage
+pnpm verify:e2e
 ```
 
 `pnpm check:gates` 只检查仓库内门禁资产是否完整；它不能代替 GitHub branch protection。远端 required checks 必须由仓库管理员配置。
+
+## GitHub API 配置
+
+有仓库管理员权限时，可以用脚本配置 `main`：
+
+```powershell
+pnpm protect:github --branch main
+```
+
+先检查 payload 而不写入远端：
+
+```powershell
+pnpm protect:github --branch main --dry-run
+```
+
+该脚本会要求 `CI / verify`、`CI / coverage`、`CI / e2e`、`Codex Review / codex_review`，并启用 Code Owner review、stale review dismissal、conversation resolution、管理员不可绕过、禁止 force push 和禁止删除。
+
+注意：GitHub 对私有仓库的 branch protection 可能要求 GitHub Pro、Team、Enterprise，或要求仓库设为 public。若 API 返回 `Upgrade to GitHub Pro or make this repository public to enable this feature`，说明仓库内门禁资产已就绪，但远端保护无法在当前 GitHub 计划下生效。

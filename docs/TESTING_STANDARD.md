@@ -17,11 +17,11 @@
 
 ## 覆盖率策略
 
-新项目建议逐步启用覆盖率门禁：
+当前模板已启用核心链路覆盖率门禁：
 
-- `packages/contracts`：80% 起。
-- `apps/web/src/shared`：80% 起。
-- `apps/mock-api/src/runtime.ts`：80% 起。
+- `packages/contracts`：statements、branches、functions、lines 均不低于 80%。
+- `apps/mock-api/src/runtime.ts`：statements、functions、lines 不低于 80%，branches 不低于 70%。
+- `apps/web` 核心链路：`shared/api`、`shared/auth`、`shared/config`、`shared/runtime`、`stores`、studio query，statements、functions、lines 不低于 80%，branches 不低于 70%。
 - Feature 首版不强制全量覆盖，但核心权限、请求、审批和运行流必须覆盖。
 
 老项目迁移时先用 report 模式跑覆盖率，再分模块提高。
@@ -32,7 +32,7 @@
 pnpm test:coverage
 ```
 
-该命令默认生成 coverage report，不进入默认 `pnpm verify`。真实项目稳定后，可以先对 `packages/contracts`、`shared/api`、`shared/auth`、`shared/runtime` 设置阈值，再进入 required checks。
+该命令生成 coverage report，并在 CI 的 `CI / coverage` required check 中执行。它不进入默认 `pnpm verify`，避免普通本地验证过重。
 
 ## TDD / 回归
 

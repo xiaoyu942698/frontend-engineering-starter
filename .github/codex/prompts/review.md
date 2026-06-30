@@ -15,7 +15,10 @@ Required review areas:
 - Changes follow architecture/API/component/security/performance/accessibility standards when touching those areas.
 - AI-authored or AI-assisted changes did not use --no-verify, skip Husky hooks, skip pnpm verify, bypass required checks, or weaken gates just to pass the current PR.
 - Gate changes preserve pnpm check:gates, CI / verify, Codex Review / codex_review, and docs/GITHUB_BRANCH_PROTECTION.md.
+- Gate changes preserve CI / coverage and CI / e2e as required checks.
 - Verification evidence is credible for the changed surface.
+- Core coverage evidence includes pnpm test:coverage when contracts, mock runtime, shared/api, shared/auth, shared/runtime, or stores change.
+- Visible journey evidence includes pnpm verify:e2e when routing, permissions, runtime flow, approvals, artifacts, or user journeys change.
 
 Return concise findings. End your final response with exactly one decision line:
 

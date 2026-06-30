@@ -1,0 +1,20 @@
+* @xiaoyu942698
+
+.github/ @xiaoyu942698
+.husky/ @xiaoyu942698
+scripts/ @xiaoyu942698
+package.json @xiaoyu942698
+pnpm-lock.yaml @xiaoyu942698
+
+packages/contracts/ @xiaoyu942698
+packages/ui/ @xiaoyu942698
+
+apps/web/src/router/ @xiaoyu942698
+apps/web/src/shared/api/ @xiaoyu942698
+apps/web/src/shared/auth/ @xiaoyu942698
+apps/web/src/shared/config/ @xiaoyu942698
+apps/web/src/shared/runtime/ @xiaoyu942698
+
+docs/*STANDARD.md @xiaoyu942698
+docs/GIT_MERGE_GATES.md @xiaoyu942698
+docs/GITHUB_BRANCH_PROTECTION.md @xiaoyu942698

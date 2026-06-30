@@ -16,8 +16,8 @@
 - [ ] `pnpm test`
 - [ ] `pnpm build`
 - [ ] `pnpm check:gates`
-- [ ] `pnpm test:coverage` when core shared/contracts/runtime/auth code changed.
-- [ ] `pnpm verify:e2e` when visible user journeys changed.
+- [ ] `pnpm test:coverage`
+- [ ] `pnpm verify:e2e`
 
 ## Naming / Comments / File Size
 
@@ -31,6 +31,9 @@
 ## Codex Review
 
 - [ ] Codex review requested through `@codex review` or automatic review.
+- [ ] `CI / verify` check passed.
+- [ ] `CI / coverage` check passed.
+- [ ] `CI / e2e` check passed.
 - [ ] `Codex Review / codex_review` check passed.
 - [ ] P0/P1 findings are fixed or explicitly accepted by maintainers.
 - [ ] No AI-assisted commit, push, PR update, or merge used `--no-verify` or bypassed required checks.
