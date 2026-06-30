@@ -1,10 +1,10 @@
 {
-  "name": "agent-flow-starter",
+  "name": "frontend-engineering-starter",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.32.1",
-  "description": "Framework-neutral Vue agent orchestration starter with mock runtime.",
+  "description": "General-purpose Vue frontend engineering starter with optional agent runtime examples.",
   "scripts": {
     "dev": "pnpm --parallel --filter @agent-flow/mock-api --filter @agent-flow/web dev",
     "dev:web": "pnpm --filter @agent-flow/web dev",

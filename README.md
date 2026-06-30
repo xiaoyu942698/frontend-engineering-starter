@@ -1,4 +1,4 @@
-# Agent Flow Starter
+# Frontend Engineering Starter
 
 框架无关的智能体前端模板。它提供 Vue 3 + Element Plus 的通用 UI 框架层、Agent 运行能力组件、Fastify mock runtime、共享 contracts，以及面向 LangGraph、CrewAI、Mastra、OpenAI Agents SDK、Google ADK 等后端框架的适配边界。
 
@@ -17,7 +17,7 @@
 ## Structure
 
 ```text
-agent-flow-starter/
+frontend-engineering-starter/
   apps/
     web/          Vue Agent Studio
     mock-api/     REST + SSE mock runtime

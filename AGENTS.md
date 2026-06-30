@@ -10,7 +10,7 @@ Do not bypass this file by editing from a single source file alone. If a task to
 
 ## Project Positioning
 
-`agent-flow-starter` is a framework-neutral Agent front-end starter. It is not a SaaS landing page and not a single fixed dashboard. The project should provide a reusable UI framework layer plus Agent runtime capability components that can be composed into task-session, workflow-console, audit, approval, or artifact views.
+`frontend-engineering-starter` is a framework-neutral front-end engineering starter. It is not a SaaS landing page and not a single fixed dashboard. The project should provide reusable UI engineering rules, module scaffolding, validation gates, and optional Agent runtime capability components that can be composed into task-session, workflow-console, audit, approval, or artifact views.
 
 ## CodeGraph
 

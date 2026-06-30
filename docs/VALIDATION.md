@@ -1,6 +1,6 @@
 # Validation
 
-Run commands from `D:\M_Work\agent-flow-starter`.
+Run commands from `D:\M_Work\frontend-engineering-starter`.
 
 ## Core
 
