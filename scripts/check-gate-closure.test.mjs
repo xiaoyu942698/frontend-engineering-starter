@@ -41,14 +41,24 @@ function createGateProject(overrides = {}) {
     '.github/CODEOWNERS.example':
       'packages/contracts/ @your-org/frontend-platform\npackages/ui/ @your-org/frontend-platform\napps/web/src/shared/api/ @your-org/frontend-platform\napps/web/src/shared/auth/ @your-org/frontend-platform\n',
     '.github/workflows/ci.yml':
-      'pull_request:\nrun: pnpm install --frozen-lockfile\nrun: pnpm verify\nrun: pnpm test:coverage\nrun: pnpm verify:e2e\n',
+      'pull_request:\ncoverage:\ne2e:\nrun: pnpm install --frozen-lockfile\nrun: pnpm verify\nrun: pnpm test:coverage\nrun: pnpm verify:e2e\n',
     '.github/workflows/codex-review.yml':
       'openai/codex-action@v1\nsecrets.OPENAI_API_KEY\nprompt-file: .github/codex/prompts/review.md\noutput-file: codex-review.md\nMERGE_DECISION: BLOCK\nMERGE_DECISION: PASS\n',
     '.github/codex/prompts/review.md':
       'MERGE_DECISION: PASS\nMERGE_DECISION: BLOCK\n--no-verify\npnpm verify\nnaming/comment/file-size\narchitecture/API/component/security/performance/accessibility\npnpm test:coverage\npnpm verify:e2e\n',
     '.github/pull_request_template.md':
       'pnpm lint:standards\npnpm lint:engineering\npnpm build\npnpm test:coverage\npnpm verify:e2e\n--no-verify\nCI / coverage\nCI / e2e\nCodex Review / codex_review\n',
+    LICENSE: 'MIT License\n\nPermission is hereby granted, free of charge,\n',
+    '.starter-version': 'frontend-engineering-starter@0.1.0\n',
+    '.env.example':
+      '# Root environment example. Copy app-level examples before configuring real values.\nVITE_API_BASE_URL=\nVITE_ENABLE_MOCK_AUTH=true\n',
+    'apps/web/.env.example':
+      'VITE_API_BASE_URL=\nVITE_AUTH_STORAGE_KEY=agent-flow.auth\nVITE_REQUEST_TIMEOUT_MS=10000\nVITE_ENABLE_MOCK_AUTH=true\n',
+    'README.md': 'Use this template\n不要 fork\nAGENTS.md\ndocs/TEAM_TEMPLATE_GUIDE.md\n',
     'AGENTS.md': '--no-verify\npnpm verify\nrequired GitHub checks\nFRONTEND_BOUNDARY_GUIDE\nCODEX_RULE_ROUTER\n',
+    'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md':
+      'Public Release Checklist\nLICENSE\n固定 MIT\n.env.example\n.github/CODEOWNERS.example\n.starter-version\n',
+    'docs/TEAM_TEMPLATE_GUIDE.md': 'Use this template\n不要 fork\nAGENTS.md\n.starter-version\n',
     'docs/GIT_MERGE_GATES.md':
       'CI / verify\nCI / coverage\nCI / e2e\nCodex Review / codex_review\nOPENAI_API_KEY\n--no-verify\npnpm lint:engineering\npnpm test:coverage\npnpm verify:e2e\n',
     'docs/GITHUB_BRANCH_PROTECTION.md':
@@ -111,4 +121,29 @@ test('requires CI coverage and e2e jobs in protected checks', () => {
   });
 
   expectGateFailure(projectDir, 'CI / coverage');
+});
+
+test('requires a public template license before release', () => {
+  const projectDir = createGateProject({
+    LICENSE: null
+  });
+
+  expectGateFailure(projectDir, 'LICENSE: required file is missing.');
+});
+
+test('requires a root environment example before release', () => {
+  const projectDir = createGateProject({
+    '.env.example': null
+  });
+
+  expectGateFailure(projectDir, '.env.example: required file is missing.');
+});
+
+test('requires the rollout plan to treat MIT as the fixed template license', () => {
+  const projectDir = createGateProject({
+    'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md':
+      'Public Release Checklist\nLICENSE\n默认建议 MIT，除非维护者选择其他许可证。\n.env.example\n.github/CODEOWNERS.example\n.starter-version\n'
+  });
+
+  expectGateFailure(projectDir, 'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md: missing "固定 MIT"');
 });

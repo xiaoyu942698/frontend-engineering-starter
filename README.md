@@ -41,7 +41,7 @@ pnpm dev
 - Web：`http://127.0.0.1:5178`
 - Mock API：`http://127.0.0.1:8787/api/runtime/snapshot`
 
-如果项目需要配置接口地址、鉴权缓存 key 或 mock 登录开关，复制并修改：
+根目录 `.env.example` 是模板级环境变量清单，只能保留示例值。Web 应用运行时配置仍以 app 级示例为准；如果项目需要配置接口地址、鉴权缓存 key 或 mock 登录开关，复制并修改：
 
 ```text
 apps/web/.env.example
@@ -173,6 +173,8 @@ frontend-engineering-starter/
 ## 版本和升级
 
 `.starter-version` 记录当前基座版本。
+
+`.env.example` 和各 app 目录下的 `.env.example` 只能写示例值，不要提交真实 token、生产 endpoint 或账号信息。
 
 业务项目从模板创建后，不会自动同步本仓库的新规则。升级应该手动进行：
 

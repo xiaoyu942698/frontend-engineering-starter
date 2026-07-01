@@ -81,6 +81,7 @@ Codex 应该自己完成这些事：
 | `.github/workflows`         | GitHub 自动检查。      |
 | `.husky`                    | 本地提交和推送检查。   |
 | `scripts`                   | 工程化检查和脚手架。   |
+| `.env.example`              | 示例环境变量清单。     |
 | `.starter-version`          | 记录项目基于哪个版本。 |
 
 ## 第一次创建项目后要改什么
@@ -91,7 +92,8 @@ Codex 应该自己完成这些事：
 - `package.json`：改项目名和描述。
 - `apps/web/index.html`：改浏览器标题。
 - `.github/CODEOWNERS`：改成自己的负责人。
-- `apps/web/.env.example`：改成自己的接口配置示例。
+- `.env.example`：保留模板级示例值，不要写真实密钥或生产地址。
+- `apps/web/.env.example`：改成自己的接口配置示例，也不要写真实密钥。
 - `.starter-version`：保留，不要删。
 
 ## 遇到检查失败怎么办
