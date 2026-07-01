@@ -13,40 +13,18 @@
 
 ## 团队怎么用
 
-先记住一句话：不要 fork，也不要在这个模板仓库里写业务代码。
+最终使用说明只维护一份：
 
-当前模板状态：
+- 团队最终使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
+
+核心规则：
 
 - 模板地址：`https://github.com/xiaoyu942698/frontend-engineering-starter`
 - 当前稳定版本：`v0.1.0`
-- 仓库是 public GitHub template repository，License 是 MIT。
-- public 只代表模板公开；业务项目仍建议创建为 private。
-
-先问一个问题：前端和后端是不是放在同一个业务仓库？
-
-- 不是，在独立前端仓库开发：点击 GitHub 的 `Use this template`，生成自己的前端项目仓库。
-- 是，前后端在同一个仓库：不要再单独建一个长期前端仓库。先拿一份模板源码，再把前端工程文件复制到业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
-
-前后端同仓时，“放进前端目录”的意思是：
-
-1. 用 `Use this template` 或 `Download ZIP` 拿一份模板源码。
-2. 不要把模板自己的 `.git` 复制进业务仓库，也不要做成嵌套仓库。
-3. 复制到业务仓库前端目录：`apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.starter-version`、`.env.example` 和前端工具配置文件。
-4. 合并到业务仓库根目录：`AGENTS.md`、`.github`、`.husky`、CODEOWNERS。已有文件要合并，不要直接覆盖。
-5. 以后运行前端命令时，先进入前端目录，例如 `cd frontend`，再运行 `pnpm install`、`pnpm dev`、`pnpm verify`。
-
-无论哪种方式，都要守住这几条：
-
-1. 业务代码只写在自己的业务仓库里。
-2. 公司、客户或未公开项目建议设为 private。
-3. 保留 `AGENTS.md`、`docs`、`scripts`、`.husky` 和 `.github/workflows`。
-4. 前后端同仓时，根目录配置要合并，不要覆盖后端已有配置。
-5. 后续升级模板规则要手动做，不会自动同步上游 `main`。
-
-两份接入文档：
-
-- Codex 和维护者执行方案：`docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md`
-- 普通团队成员使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
+- 不要 fork，不要在模板仓库里写业务代码。
+- 只有前端仓库：点 GitHub 的 `Use this template`。
+- 前后端同仓：拿一份模板代码，不带 `.git`，把前端工程文件复制到业务仓库的前端目录。
+- Codex 入口规则必须保留：`AGENTS.md`
 
 ## 快速启动
 

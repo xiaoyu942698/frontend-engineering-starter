@@ -51,7 +51,9 @@
 
 ## Downstream Creation Flow
 
-下游项目分两种接入方式，Codex 必须先判断业务仓库形态。
+团队对外使用说明只维护一份：`docs/TEAM_TEMPLATE_GUIDE.md`。
+
+本节只记录 Codex 和维护者执行时必须遵守的边界。下游项目分两种接入方式，Codex 必须先判断业务仓库形态。
 
 | 业务仓库形态           | 怎么接入                                                                        |
 | ---------------------- | ------------------------------------------------------------------------------- |
@@ -62,28 +64,24 @@
 
 ### Independent Frontend Repository
 
-独立前端项目按这个流程生成：
+独立前端项目按团队最终说明生成。Codex 额外确认：
 
-1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`，使用 GitHub `Use this template` 生成新仓库，不使用 fork。
-2. 新仓库由业务负责人放到自己的个人账号下。
-3. 业务项目如果有私有代码，必须设为 private。
-4. 克隆下游仓库。
-5. 替换 `README.md`、`package.json`、网页 title 和项目显示名。
-6. 替换 `.github/CODEOWNERS` 为下游项目真实负责人。
-7. 配置下游项目自己的 GitHub secrets、根目录和 app 级 `.env.example`、部署设置。
-8. 保留 `AGENTS.md`、`docs/CODEX_RULE_ROUTER.md`、`.github/workflows`、`.husky`、`scripts` 和 `pnpm verify`。
-9. 运行 `pnpm install`、`pnpm verify`。
-10. 首次提交应说明基于哪个 `.starter-version`。
+1. 使用 `Use this template`，不使用 fork。
+2. 业务项目如果有私有代码，必须设为 private。
+3. 替换 `README.md`、`package.json`、网页 title、`.github/CODEOWNERS`、secrets、环境变量和部署配置。
+4. 保留 `AGENTS.md`、`docs/CODEX_RULE_ROUTER.md`、`.github/workflows`、`.husky`、`scripts` 和 `pnpm verify`。
+5. 运行 `pnpm install`、`pnpm verify`。
+6. 首次提交说明基于哪个 `.starter-version`。
 
 ### Full-stack Repository
 
-前后端同仓项目不应该长期维护一个额外的前端业务仓库。Codex 应按迁入方式处理：
+前后端同仓项目不应该长期维护一个额外的前端业务仓库。Codex 额外确认：
 
 1. 识别业务仓库已有结构，例如 `frontend/`、`web/`、`server/`、`backend/`。
 2. 和业务负责人确认前端目录；默认建议使用已有前端目录，没有则创建 `frontend/`。
 3. 用 `Use this template`、临时 clone 或 `Download ZIP` 拿到模板源码，但不要把模板 `.git` 放入业务仓库。
-4. 复制到前端目录：`apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.starter-version`、`.env.example`、`tsconfig.base.json`、ESLint、Prettier、Stylelint、commitlint 和 lint-staged 配置。
-5. 合并到业务仓库根目录：`AGENTS.md`、`.github`、`.husky`、CODEOWNERS、PR 模板、CI、Codex Review、secrets 和部署配置。已有后端配置必须合并，不能直接覆盖。
+4. 按 `docs/TEAM_TEMPLATE_GUIDE.md` 的最终清单复制前端工程文件。
+5. 合并根目录 `AGENTS.md`、`.github`、`.husky`、`.github/CODEOWNERS`、PR 模板、CI、Codex Review、secrets 和部署配置。已有后端配置必须合并，不能直接覆盖。
 6. 根目录 `AGENTS.md` 必须明确：前端任务进入前端目录后再读取本模板规则，后端任务继续按后端规则处理。
 7. 下游 `.starter-version` 可以放在前端目录，也可以由根目录统一记录，但必须能看出当前前端基座版本。
 8. 前端验证命令应在业务仓库中可执行；如果前端位于子目录，CI 和 hooks 应显式 `cd frontend` 或设置等价 working directory。
