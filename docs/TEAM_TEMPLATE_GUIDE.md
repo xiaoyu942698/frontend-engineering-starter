@@ -31,15 +31,18 @@
 
 1. 不要长期单独维护一个前端业务仓库。
 2. 在业务仓库里找一个前端目录，例如 `frontend/` 或 `web/`。
-3. 把这个模板放进前端目录。
-4. 根目录的 `AGENTS.md`、`.github/workflows`、`.husky`、CODEOWNERS 要合并，不要覆盖后端已有配置。
-5. 后续业务代码仍然写在真正的业务仓库里。
+3. 用 `Use this template` 或 `Download ZIP` 拿一份模板代码。
+4. 不要复制模板里的 `.git`，也不要把模板仓库直接塞进业务仓库里。
+5. 把这些复制到前端目录：`apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.starter-version`、`.env.example` 和前端工具配置文件。
+6. 把这些合并到业务仓库根目录：`AGENTS.md`、`.github`、`.husky`、CODEOWNERS。已有文件就合并，不要覆盖后端已有配置。
+7. 后续业务代码仍然写在真正的业务仓库里。
 
 第一次拿到项目后，至少做三件事：
 
-1. 运行 `pnpm install`。
-2. 运行 `pnpm dev` 看能不能启动。
-3. 运行 `pnpm verify` 看检查能不能通过。
+1. 如果前端在子目录，先进入前端目录，例如 `cd frontend`。
+2. 运行 `pnpm install`。
+3. 运行 `pnpm dev` 看能不能启动。
+4. 运行 `pnpm verify` 看检查能不能通过。
 
 ## 不要这样做
 
@@ -56,7 +59,7 @@
 
 用 `Use this template` 不一样。它是复制一份新项目，你可以把新项目设成 private。
 
-如果你们是前后端同仓，`Use this template` 可以只用来拿模板代码。最终业务代码仍放在真正的业务仓库里。
+如果你们是前后端同仓，`Use this template` 可以只用来拿模板代码。复制时不要带 `.git`，最终业务代码仍放在真正的业务仓库里。
 
 ## Codex 怎么用
 
@@ -139,7 +142,7 @@ Codex 应该自己完成这些事：
 当前稳定版本：v0.1.0。
 不要 fork，不要在模板仓库写业务代码。
 如果项目只有前端：点 Use this template，生成自己的前端仓库。
-如果项目是前后端同仓：把模板放进业务仓库的前端目录，比如 frontend/ 或 web/。
+如果项目是前后端同仓：先拿一份模板代码，不带 .git，把前端工程文件复制到业务仓库的前端目录，比如 frontend/ 或 web/。
 公司、客户或未公开项目建议设为 private。
 接入后保留 AGENTS.md、docs、scripts、.husky 和 .github/workflows；同仓项目要合并这些配置，不要覆盖后端配置。
 平时给 Codex 直接描述需求即可，Codex 会按项目里的 AGENTS.md 和工程化规则开发。

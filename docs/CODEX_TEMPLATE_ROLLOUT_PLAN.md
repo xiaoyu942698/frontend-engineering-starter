@@ -53,10 +53,10 @@
 
 下游项目分两种接入方式，Codex 必须先判断业务仓库形态。
 
-| 业务仓库形态           | 怎么接入                                                            |
-| ---------------------- | ------------------------------------------------------------------- |
-| 只有前端一个仓库       | 用 `Use this template` 生成新的前端项目仓库。                       |
-| 前端和后端在同一个仓库 | 把模板放进业务仓库的前端目录，例如 `frontend/`、`web/` 或已有目录。 |
+| 业务仓库形态           | 怎么接入                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------- |
+| 只有前端一个仓库       | 用 `Use this template` 生成新的前端项目仓库。                                   |
+| 前端和后端在同一个仓库 | 复制模板前端工程文件到业务仓库的前端目录，例如 `frontend/`、`web/` 或已有目录。 |
 
 如果不确定，优先问清楚前端目录在哪里，不要直接创建长期前端业务仓库。
 
@@ -81,12 +81,13 @@
 
 1. 识别业务仓库已有结构，例如 `frontend/`、`web/`、`server/`、`backend/`。
 2. 和业务负责人确认前端目录；默认建议使用已有前端目录，没有则创建 `frontend/`。
-3. 将本模板的前端工程化内容迁入前端目录，不覆盖后端代码。
-4. 根目录 `AGENTS.md` 必须保留或合并，并明确前端任务进入前端目录后再读取本模板规则。
-5. `.github/workflows`、`.husky`、CODEOWNERS、secrets 和部署配置必须合并，不能直接覆盖业务仓库已有后端配置。
-6. 下游 `.starter-version` 可以放在前端目录，也可以由根目录统一记录，但必须能看出当前前端基座版本。
-7. 前端验证命令应在业务仓库中可执行；如果前端位于子目录，CI 和 hooks 应显式 `cd frontend` 或设置等价 working directory。
-8. 首次提交应说明基于哪个 `.starter-version`、迁入到哪个前端目录、哪些根目录配置被合并。
+3. 用 `Use this template`、临时 clone 或 `Download ZIP` 拿到模板源码，但不要把模板 `.git` 放入业务仓库。
+4. 复制到前端目录：`apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.starter-version`、`.env.example`、`tsconfig.base.json`、ESLint、Prettier、Stylelint、commitlint 和 lint-staged 配置。
+5. 合并到业务仓库根目录：`AGENTS.md`、`.github`、`.husky`、CODEOWNERS、PR 模板、CI、Codex Review、secrets 和部署配置。已有后端配置必须合并，不能直接覆盖。
+6. 根目录 `AGENTS.md` 必须明确：前端任务进入前端目录后再读取本模板规则，后端任务继续按后端规则处理。
+7. 下游 `.starter-version` 可以放在前端目录，也可以由根目录统一记录，但必须能看出当前前端基座版本。
+8. 前端验证命令应在业务仓库中可执行；如果前端位于子目录，CI 和 hooks 应显式 `cd frontend` 或设置等价 working directory。
+9. 首次提交应说明基于哪个 `.starter-version`、迁入到哪个前端目录、哪些根目录配置被合并。
 
 ## Upgrade Flow
 

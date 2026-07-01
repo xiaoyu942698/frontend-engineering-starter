@@ -25,7 +25,15 @@
 先问一个问题：前端和后端是不是放在同一个业务仓库？
 
 - 不是，在独立前端仓库开发：点击 GitHub 的 `Use this template`，生成自己的前端项目仓库。
-- 是，前后端在同一个仓库：不要再单独建一个长期前端仓库。把这个模板放进业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
+- 是，前后端在同一个仓库：不要再单独建一个长期前端仓库。先拿一份模板源码，再把前端工程文件复制到业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
+
+前后端同仓时，“放进前端目录”的意思是：
+
+1. 用 `Use this template` 或 `Download ZIP` 拿一份模板源码。
+2. 不要把模板自己的 `.git` 复制进业务仓库，也不要做成嵌套仓库。
+3. 复制到业务仓库前端目录：`apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.starter-version`、`.env.example` 和前端工具配置文件。
+4. 合并到业务仓库根目录：`AGENTS.md`、`.github`、`.husky`、CODEOWNERS。已有文件要合并，不要直接覆盖。
+5. 以后运行前端命令时，先进入前端目录，例如 `cd frontend`，再运行 `pnpm install`、`pnpm dev`、`pnpm verify`。
 
 无论哪种方式，都要守住这几条：
 
