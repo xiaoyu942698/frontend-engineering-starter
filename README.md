@@ -22,14 +22,19 @@
 - 仓库是 public GitHub template repository，License 是 MIT。
 - public 只代表模板公开；业务项目仍建议创建为 private。
 
-正确方式是：
+先判断你的项目形态：
 
-1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`。
-2. 点击 GitHub 的 `Use this template`。
-3. 生成一个属于自己项目的新仓库。
-4. 业务项目建议设置为 private。
-5. 在新仓库里开发业务代码。
-6. 后续是否升级模板规则，由业务项目自己决定。
+- 如果是独立前端项目：打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`，点击 GitHub 的 `Use this template`，生成自己的前端项目仓库。
+- 如果是前后端同仓项目：不要额外长期维护一个单独前端业务仓库。应把本模板作为前端工程化基座，迁入业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
+
+前后端同仓时，推荐这样做：
+
+1. 业务仓库仍由项目负责人创建和管理，通常设为 private。
+2. 在业务仓库里明确前端目录，例如 `frontend/`。
+3. 将本模板的前端工程化文件迁入前端目录，包括 `apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-workspace.yaml`、`.starter-version` 等。
+4. 根目录保留或合并 `AGENTS.md`，让 Codex 能识别：前端任务进入前端目录并遵守本模板规则，后端任务按后端项目规则处理。
+5. 根目录的 `.github/workflows`、`.husky`、CODEOWNERS、secrets 和部署配置不要直接覆盖已有后端配置，应合并成适合当前业务仓库的版本。
+6. 后续是否升级模板规则，由业务项目自己决定，不自动同步上游 `main`。
 
 两份接入文档：
 
@@ -183,7 +188,7 @@ frontend-engineering-starter/
 
 `.env.example` 和各 app 目录下的 `.env.example` 只能写示例值，不要提交真实 token、生产 endpoint 或账号信息。
 
-业务项目从模板创建后，不会自动同步本仓库的新规则。升级应该手动进行：
+业务项目接入模板后，不会自动同步本仓库的新规则。升级应该手动进行：
 
 1. 看本仓库的新版本说明：`https://github.com/xiaoyu942698/frontend-engineering-starter/releases`
 2. 新建升级分支。

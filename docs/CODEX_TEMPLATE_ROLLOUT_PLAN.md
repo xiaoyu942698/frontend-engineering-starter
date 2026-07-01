@@ -7,9 +7,9 @@
 采用公开 GitHub template repository 模式。
 
 - 上游仓库：`frontend-engineering-starter`，只维护工程化基座、规则、脚手架、CI、Codex 入口和示例。
-- 下游仓库：团队成员从 template 生成的新业务项目，业务代码只在下游仓库开发。
+- 下游仓库：团队成员从 template 生成的新前端项目，或已经存在的前后端同仓业务项目。
 - 更新方式：不自动同步上游 `main`。下游项目只按版本手动升级。
-- Codex 入口：每个下游项目必须保留根目录 `AGENTS.md`，普通使用者只描述需求，Codex 自己读取规则。
+- Codex 入口：每个下游项目必须保留可被 Codex 发现的 `AGENTS.md`。前后端同仓时，根目录 `AGENTS.md` 必须把前端任务路由到前端目录和本模板规则。
 
 ## Current Published State
 
@@ -28,7 +28,7 @@
 | 角色          | 职责                                                                  |
 | ------------- | --------------------------------------------------------------------- |
 | Upstream      | 维护模板、规则、脚手架、CI、示例、发布版本和升级说明。                |
-| Downstream    | 承载具体业务代码，按自己的项目节奏选择是否升级模板规则。              |
+| Downstream    | 承载具体业务代码，可能是独立前端仓库，也可能是前后端同仓业务仓库。    |
 | Maintainer    | 在上游发版本、写迁移说明、处理规则变更和破坏性变更。                  |
 | Project owner | 在下游替换项目名、CODEOWNERS、secrets、环境变量、业务接口和部署配置。 |
 
@@ -51,7 +51,11 @@
 
 ## Downstream Creation Flow
 
-下游新项目按这个流程生成：
+下游项目分两种接入方式，Codex 必须先判断业务仓库形态。
+
+### Independent Frontend Repository
+
+独立前端项目按这个流程生成：
 
 1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`，使用 GitHub `Use this template` 生成新仓库，不使用 fork。
 2. 新仓库由业务负责人放到自己的个人账号下。
@@ -64,6 +68,19 @@
 9. 运行 `pnpm install`、`pnpm verify`。
 10. 首次提交应说明基于哪个 `.starter-version`。
 
+### Full-stack Repository
+
+前后端同仓项目不应该长期维护一个额外的前端业务仓库。Codex 应按迁入方式处理：
+
+1. 识别业务仓库已有结构，例如 `frontend/`、`web/`、`server/`、`backend/`。
+2. 和业务负责人确认前端目录；默认建议使用已有前端目录，没有则创建 `frontend/`。
+3. 将本模板的前端工程化内容迁入前端目录，不覆盖后端代码。
+4. 根目录 `AGENTS.md` 必须保留或合并，并明确前端任务进入前端目录后再读取本模板规则。
+5. `.github/workflows`、`.husky`、CODEOWNERS、secrets 和部署配置必须合并，不能直接覆盖业务仓库已有后端配置。
+6. 下游 `.starter-version` 可以放在前端目录，也可以由根目录统一记录，但必须能看出当前前端基座版本。
+7. 前端验证命令应在业务仓库中可执行；如果前端位于子目录，CI 和 hooks 应显式 `cd frontend` 或设置等价 working directory。
+8. 首次提交应说明基于哪个 `.starter-version`、迁入到哪个前端目录、哪些根目录配置被合并。
+
 ## Upgrade Flow
 
 下游项目升级模板规则时，Codex 必须走手动升级，不允许自动拉上游 `main` 覆盖业务项目。
@@ -72,11 +89,12 @@
 2. 读取上游 release notes 和本文件中的升级流程，只从稳定 release tag 判断升级内容。
 3. 新建升级分支，例如 `chore/update-frontend-starter-v0.2.0`。
 4. 只迁移必要的规则文件、脚本、CI、hooks 或示例，不覆盖业务代码。
-5. 如果新规则会卡住旧代码，先记录影响，再决定是修代码还是延后升级。
-6. 更新下游 `.starter-version`。
-7. 运行 `pnpm verify`。
-8. 如果升级影响核心链路或可见页面，加跑 `pnpm test:coverage` 和 `pnpm verify:e2e`。
-9. 提交时说明升级版本、迁移文件、验证命令和剩余风险。
+5. 前后端同仓时，只迁移前端目录和已合并的根目录前端门禁配置，不改后端规则。
+6. 如果新规则会卡住旧代码，先记录影响，再决定是修代码还是延后升级。
+7. 更新下游 `.starter-version`。
+8. 运行 `pnpm verify`。
+9. 如果升级影响核心链路或可见页面，加跑 `pnpm test:coverage` 和 `pnpm verify:e2e`。
+10. 提交时说明升级版本、迁移文件、验证命令和剩余风险。
 
 ## Version Rules
 
