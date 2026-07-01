@@ -11,6 +11,18 @@
 - 更新方式：不自动同步上游 `main`。下游项目只按版本手动升级。
 - Codex 入口：每个下游项目必须保留根目录 `AGENTS.md`，普通使用者只描述需求，Codex 自己读取规则。
 
+## Current Published State
+
+当前上游模板已经完成公开发布。
+
+- 模板地址：`https://github.com/xiaoyu942698/frontend-engineering-starter`
+- 仓库可见性：public。
+- GitHub template repository：已开启。
+- License：MIT。
+- 默认分支：`main`。
+- 当前稳定版本：`v0.1.0`，对应 `.starter-version` 中的 `frontend-engineering-starter@0.1.0`。
+- Release 地址：`https://github.com/xiaoyu942698/frontend-engineering-starter/releases/tag/v0.1.0`
+
 ## Repository Roles
 
 | 角色          | 职责                                                                  |
@@ -22,25 +34,26 @@
 
 ## Public Release Checklist
 
-公开上游仓库前，Codex 必须完成这些检查：
+`v0.1.0` 已经发布。后续每次公开 release 前，Codex 必须完成这些检查：
 
 1. 确认工作区干净：`git status --short --branch`
 2. 扫描敏感信息：真实 token、密钥、生产账号、私有 endpoint、内部截图、业务文档。
 3. 检查 git history 是否包含不应公开的提交。
-4. 添加根目录 `LICENSE`，许可证固定 MIT。
+4. 确认根目录 `LICENSE` 仍为固定 MIT。
 5. 确认根目录 `.env.example` 和 app 级 `.env.example` 只有示例值，没有真实配置。
 6. 确认 `.github/CODEOWNERS.example` 可指导下游替换 owner。
 7. 确认 `README.md`、本文件、`docs/TEAM_TEMPLATE_GUIDE.md` 说明不要 fork 业务项目。
 8. 确认 `.starter-version` 存在，并与发布 tag 对应。
 9. 运行 `pnpm verify`。
-10. 打 tag，例如 `v0.1.0`。
-11. 在 GitHub 设置中将仓库改为 public，并开启 template repository。
+10. 更新版本号和 release notes，打 tag，例如 `v0.2.0`。
+11. 确认 GitHub 仓库仍为 public，并且 template repository 仍开启。
+12. 发布后核对 release 页面，并同步 README 和团队使用说明里的版本信息。
 
 ## Downstream Creation Flow
 
 下游新项目按这个流程生成：
 
-1. 使用 GitHub `Use this template` 生成新仓库，不使用 fork。
+1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`，使用 GitHub `Use this template` 生成新仓库，不使用 fork。
 2. 新仓库由业务负责人放到自己的个人账号下。
 3. 业务项目如果有私有代码，必须设为 private。
 4. 克隆下游仓库。
@@ -56,7 +69,7 @@
 下游项目升级模板规则时，Codex 必须走手动升级，不允许自动拉上游 `main` 覆盖业务项目。
 
 1. 读取下游 `.starter-version`。
-2. 读取上游 release notes 和本文件中的升级流程。
+2. 读取上游 release notes 和本文件中的升级流程，只从稳定 release tag 判断升级内容。
 3. 新建升级分支，例如 `chore/update-frontend-starter-v0.2.0`。
 4. 只迁移必要的规则文件、脚本、CI、hooks 或示例，不覆盖业务代码。
 5. 如果新规则会卡住旧代码，先记录影响，再决定是修代码还是延后升级。
@@ -103,3 +116,10 @@ pnpm verify:e2e
 ```
 
 下游业务项目可根据项目阶段缩小验证范围，但提交前至少应运行 `pnpm verify` 或项目定义的等价验证命令。
+
+修改发布状态、版本说明或接入方式时，还要同步检查：
+
+- `README.md`
+- `docs/TEAM_TEMPLATE_GUIDE.md`
+- `.starter-version`
+- GitHub release notes

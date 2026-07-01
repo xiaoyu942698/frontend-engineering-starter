@@ -47,6 +47,7 @@ Do not bypass this file by editing from a single source file alone. If a task to
 - Follow `docs/NAMING_AND_COMMENT_STANDARD.md` for class naming, function naming, TSDoc, TODO, comment density, and single-file size rules.
 - Follow `docs/GIT_MERGE_GATES.md` for commit, push, CI, and Codex review gate requirements.
 - Follow `docs/GITHUB_BRANCH_PROTECTION.md` when configuring remote required checks.
+- Follow `docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md` when changing template publishing status, release notes, downstream project creation flow, starter upgrades, or team distribution docs.
 - Use `docs/FRONTEND_MODULE_TEMPLATE.md` when adding pages or modules.
 - Prefer `pnpm scaffold:feature <feature-name> --title <title> --permission <domain:action>` for new feature modules, then wire the route intentionally.
 - Route-level auth and permissions must use route meta plus `apps/web/src/router` guards.

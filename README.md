@@ -15,9 +15,16 @@
 
 如果是团队新项目，不要 fork，也不要在这个模板仓库里写业务代码。
 
+当前模板状态：
+
+- 模板地址：`https://github.com/xiaoyu942698/frontend-engineering-starter`
+- 当前稳定版本：`v0.1.0`
+- 仓库是 public GitHub template repository，License 是 MIT。
+- public 只代表模板公开；业务项目仍建议创建为 private。
+
 正确方式是：
 
-1. 打开本仓库。
+1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`。
 2. 点击 GitHub 的 `Use this template`。
 3. 生成一个属于自己项目的新仓库。
 4. 业务项目建议设置为 private。
@@ -178,7 +185,7 @@ frontend-engineering-starter/
 
 业务项目从模板创建后，不会自动同步本仓库的新规则。升级应该手动进行：
 
-1. 看本仓库的新版本说明。
+1. 看本仓库的新版本说明：`https://github.com/xiaoyu942698/frontend-engineering-starter/releases`
 2. 新建升级分支。
 3. 只同步需要的规则文件、脚本或 CI。
 4. 更新 `.starter-version`。

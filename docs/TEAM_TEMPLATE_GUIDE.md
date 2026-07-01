@@ -2,6 +2,13 @@
 
 这份文档给第一次使用的人看。你不需要懂模板仓库、工程化、门禁这些词，按下面做就行。
 
+## 当前模板
+
+- 模板地址：`https://github.com/xiaoyu942698/frontend-engineering-starter`
+- 当前稳定版本：`v0.1.0`
+- 这个模板仓库是 public，因为团队成员需要能直接复制。
+- 你的业务项目一般不要 public，公司项目、客户项目和未公开产品都建议设成 private。
+
 ## 一句话
 
 这个仓库是前端项目的样板间。
@@ -10,7 +17,7 @@
 
 ## 正确用法
 
-1. 打开 `frontend-engineering-starter` 仓库。
+1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`。
 2. 点击 GitHub 上的 `Use this template`。
 3. 创建一个属于你自己的新仓库。
 4. 如果是公司或客户项目，新仓库请选择 private。
@@ -63,7 +70,7 @@ Codex 应该自己完成这些事：
 
 如果你想升级到新规则，需要手动升级：
 
-1. 看模板仓库的新版本说明。
+1. 看模板仓库的新版本说明：`https://github.com/xiaoyu942698/frontend-engineering-starter/releases`
 2. 新建一个升级分支。
 3. 只同步需要的规则文件或脚本。
 4. 跑 `pnpm verify`。
@@ -112,8 +119,11 @@ Codex 应该自己完成这些事：
 可以直接把这段发给团队：
 
 ```text
-以后新前端项目请基于 frontend-engineering-starter 创建。不要 fork，不要在模板仓库写业务代码。
-打开模板仓库后点 Use this template，生成自己的项目仓库；业务项目建议设为 private。
+以后新前端项目请基于 frontend-engineering-starter 创建。
+模板地址：https://github.com/xiaoyu942698/frontend-engineering-starter
+当前稳定版本：v0.1.0。
+不要 fork，不要在模板仓库写业务代码。
+打开模板仓库后点 Use this template，生成自己的项目仓库；公司、客户或未公开业务项目建议设为 private。
 创建后保留 AGENTS.md、docs、scripts、.husky 和 .github/workflows。
 平时给 Codex 直接描述需求即可，Codex 会按项目里的 AGENTS.md 和工程化规则开发。
 提交前至少跑 pnpm verify。
