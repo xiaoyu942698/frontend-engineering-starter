@@ -39,6 +39,11 @@ Key front-end foundations:
 
 这个仓库不是某一种业务系统模板，而是一套前端工程化底座。后面可以长成后台、Agent 产品、运营工具或别的系统，但新增代码都先按同一套基础规矩来。
 
+团队基于本仓库开新项目时，看两份接入文档：
+
+- Codex 和维护者执行方案：`docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md`
+- 普通团队成员使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
+
 最常用流程：
 
 1. 安装依赖：`pnpm install`
