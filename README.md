@@ -1,128 +1,190 @@
 # Frontend Engineering Starter
 
-框架无关的智能体前端模板。它提供 Vue 3 + Element Plus 的通用 UI 框架层、Agent 运行能力组件、Fastify mock runtime、共享 contracts，以及面向 LangGraph、CrewAI、Mastra、OpenAI Agents SDK、Google ADK 等后端框架的适配边界。
+通用前端工程化基座。它不是某一个固定业务系统，也不是只能做 Agent 页面；它提供的是一套可以复制到新项目里的前端基础设施：目录结构、模块脚手架、接口边界、权限约束、UI 规范、测试、CI、Git 门禁和 Codex 接入规则。
 
-## Stack
+后续项目可以长成后台管理、运营工具、Agent 产品、工作流控制台或其他前端系统，但新增代码都应该先遵守这套基础规则。
 
-- Vue 3 + TypeScript + Vite
-- Element Plus
-- Pinia + Vue Router
-- TanStack Vue Query + Axios
-- Vue Flow
-- Fastify mock API
-- Zod contracts
-- Design tokens and reusable Vue UI components
-- Vitest + Playwright
+## 适合谁用
 
-## Structure
+- 维护者：维护这个工程化基座，发布新版本。
+- 项目负责人：基于本仓库创建自己的业务项目。
+- 普通开发者：在业务项目里按规范开发页面、模块和接口。
+- Codex：通过根目录 `AGENTS.md` 自动读取工程化规则并完成开发任务。
 
-```text
-frontend-engineering-starter/
-  apps/
-    web/          Vue Agent Studio
-    mock-api/     REST + SSE mock runtime
-  packages/
-    contracts/    shared Agent/Tool/Workflow/Run schemas
-    ui/           design tokens and reusable UI components
-  docs/
-```
+## 团队怎么用
 
-Key front-end foundations:
+如果是团队新项目，不要 fork，也不要在这个模板仓库里写业务代码。
 
-- `apps/web/src/router`: route table, route meta typing, title/auth/permission guard.
-- `apps/web/src/stores/auth-store.ts`: starter auth session, token, user, and permission state.
-- `apps/web/src/shared/api`: Axios instance, `request<T>()`, Zod response validation, normalized errors.
-- `apps/web/src/shared/auth`: route/action permission helpers and `v-permission`.
-- `packages/ui`: design tokens, layout primitives, timeline/KV components, and `UiStateBlock`.
+正确方式是：
 
-## How To Use
+1. 打开本仓库。
+2. 点击 GitHub 的 `Use this template`。
+3. 生成一个属于自己项目的新仓库。
+4. 业务项目建议设置为 private。
+5. 在新仓库里开发业务代码。
+6. 后续是否升级模板规则，由业务项目自己决定。
 
-这个仓库不是某一种业务系统模板，而是一套前端工程化底座。后面可以长成后台、Agent 产品、运营工具或别的系统，但新增代码都先按同一套基础规矩来。
-
-团队基于本仓库开新项目时，看两份接入文档：
+两份接入文档：
 
 - Codex 和维护者执行方案：`docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md`
 - 普通团队成员使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
 
-最常用流程：
-
-1. 安装依赖：`pnpm install`
-2. 本地启动：`pnpm dev`
-3. 新增模块：`pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read`
-4. 手动把新模块 route 接入 `apps/web/src/router/index.ts`
-5. 开发时请求走 `shared/api`，权限走 route meta 和 `v-permission`，UI 优先用 Element Plus 和 `packages/ui`
-6. 提交前跑：`pnpm verify`
-7. 改了核心链路或可见流程时，加跑：`pnpm test:coverage` 和 `pnpm verify:e2e`
-
-记住三条硬规则：
-
-- 组件里不要直接写 `axios`，统一走 `apps/web/src/shared/api`。
-- 不要在业务页面里新建一套颜色、按钮、弹窗或表格体系，先用 Element Plus 和 UI token。
-- 新模块不要手写散乱目录，先用 `pnpm scaffold:feature` 生成骨架。
-
-## Codex Entry
-
-Codex 接入开发时，入口固定在根目录 `AGENTS.md`。这是本仓库给 Codex 的必走规则文件。
-
-实际使用时，使用者只需要描述开发任务，例如“新增一个审批页面”或“修复登录权限问题”。使用者不需要背规范，也不需要每次提醒 Codex 怎么写代码。
-
-规范入口由 Codex 自己承担：
-
-- Codex 接到任务后，必须先读根目录 `AGENTS.md`。
-- Codex 再按 `AGENTS.md` 路由到具体规则文档，例如架构边界、API、组件、测试、安全、性能、可访问性和 Git 门禁。
-- 新增模块时，Codex 优先使用 `pnpm scaffold:feature` 生成标准骨架，再接入 route、API、权限、UI 和测试。
-- 提交前，Codex 必须自己运行对应验证命令；不允许使用 `--no-verify`，也不允许绕过 `pnpm verify`、`pnpm test:coverage`、`pnpm verify:e2e` 或 `check:gates`。
-
-一句话：使用者只管提需求，Codex 必须自己从 `AGENTS.md` 进入工程化规则。
-
-## Commands
+## 快速启动
 
 ```powershell
 pnpm install
 pnpm dev
-pnpm typecheck
+```
+
+本地地址：
+
+- Web：`http://127.0.0.1:5178`
+- Mock API：`http://127.0.0.1:8787/api/runtime/snapshot`
+
+如果项目需要配置接口地址、鉴权缓存 key 或 mock 登录开关，复制并修改：
+
+```text
+apps/web/.env.example
+```
+
+## 新增模块
+
+新增业务模块时，先用脚手架生成标准骨架：
+
+```powershell
+pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read
+```
+
+生成后再手动把 route 接入：
+
+```text
+apps/web/src/router/index.ts
+```
+
+基本要求：
+
+- 请求统一走 `apps/web/src/shared/api`。
+- 权限统一走 route meta 和 `v-permission`。
+- UI 优先使用 Element Plus 和 `packages/ui`。
+- 不要在业务页面里重新造一套按钮、弹窗、表格或颜色体系。
+
+## Codex 接入
+
+Codex 的入口固定在根目录：
+
+```text
+AGENTS.md
+```
+
+普通使用者只需要描述需求，例如：
+
+```text
+新增一个审批页面，支持列表、查询、空状态和错误状态。
+```
+
+不需要每次提醒 Codex 怎么遵守规范。Codex 必须自己读取 `AGENTS.md`，再按任务类型查对应文档和验证命令。
+
+Codex 必须遵守：
+
+- 先读 `AGENTS.md`。
+- 新模块优先用 `pnpm scaffold:feature`。
+- 修改接口、权限、UI、测试、CI 或 Git 门禁时，查对应 `docs` 文档。
+- 提交前运行对应验证命令。
+- 不允许使用 `--no-verify` 绕过检查。
+
+## 常用命令
+
+```powershell
+pnpm format:check
 pnpm lint
 pnpm test
 pnpm test:coverage
+pnpm typecheck
 pnpm build
+pnpm verify
 pnpm verify:e2e
-pnpm scaffold:feature approval-center --title 审批中心 --permission approval:read
+pnpm check:gates
+```
+
+远端分支保护配置脚本：
+
+```powershell
 pnpm protect:github --branch main
 ```
 
-Development URLs:
+注意：GitHub Free 的 private repo 可能无法启用 branch protection。代码里的门禁资产可以准备好，但远端强制拦截能力取决于 GitHub 计划。
 
-- Web: `http://127.0.0.1:5178`
-- Mock API: `http://127.0.0.1:8787/api/runtime/snapshot`
+## 提交前必须确认
 
-Copy `apps/web/.env.example` when a project needs a local API base URL, auth storage key, or mock-auth switch.
+普通改动至少运行：
 
-## Design Rule
+```powershell
+pnpm verify
+```
 
-UI changes must pass `ai-ui-design-audit`: no decorative AI-looking gradients, no card nesting, no default-centered tool surfaces, and no repeated icon-card pattern. Theme color, secondary color, text color, state color, spacing, radius, and typography are centralized in `packages/ui/src/styles/tokens.css`. Mature controls come from Element Plus; local UI code should provide tokens, layout, and domain composition rather than another component framework.
+改了核心链路、覆盖率门禁、运行流或可见页面时，加跑：
 
-## Engineering Rule
+```powershell
+pnpm test:coverage
+pnpm verify:e2e
+```
 
-Department-level frontend rules live in `docs/FRONTEND_ENGINEERING_STANDARD.md`.
-Human-readable architecture and boundary explanation lives in `docs/FRONTEND_BOUNDARY_GUIDE.md`.
-New page and module templates live in `docs/FRONTEND_MODULE_TEMPLATE.md`.
-Naming, comment, and single-file size rules live in `docs/NAMING_AND_COMMENT_STANDARD.md`.
-Architecture, API, component, test, security, performance, accessibility, and Codex routing rules live in dedicated `docs/*STANDARD.md` and `docs/CODEX_RULE_ROUTER.md` files.
-Commit, merge, CI, and Codex review gates live in `docs/GIT_MERGE_GATES.md`.
-GitHub branch protection setup lives in `docs/GITHUB_BRANCH_PROTECTION.md`.
+本仓库已经配置：
 
-- Commit format: Conventional Commits, enforced by commitlint.
-- Pre-commit: lint-staged formats changed files, runs ESLint/Stylelint auto-fix, focused type checks, naming/comment/file-size checks, engineering-rule checks, and gate-closure checks.
-- Pre-push: `pnpm verify`.
-- CI: `.github/workflows/ci.yml` exposes `CI / verify`, `CI / coverage`, and `CI / e2e`; `.github/workflows/codex-review.yml` exposes `Codex Review / codex_review`.
-- Gate closure: `pnpm check:gates` verifies hooks, workflows, Codex review prompt, PR template, CODEOWNERS, AI bypass rules, and required-check documentation are still present.
-- Coverage gate: `pnpm test:coverage` enforces core contracts, mock runtime, and web shared/auth/api/runtime/store coverage thresholds.
-- E2E gate: `pnpm verify:e2e` runs desktop and mobile Playwright smoke tests against the web app and mock API.
-- Ownership: `.github/CODEOWNERS` protects critical directories; `.github/CODEOWNERS.example` is only a downstream replacement template.
-- Module scaffold: `pnpm scaffold:feature <feature-name> --title <中文标题> --permission <domain:action>` creates the standard feature skeleton.
-- Remote protection: `pnpm protect:github --branch main` applies required checks and Code Owner review through the GitHub API when the operator has admin permission and the GitHub plan supports branch protection.
-- New shared frontend behavior belongs in `packages/ui` only when it is a thin adapter, layout shell, token, or cross-project composition helper.
+- commit message 检查。
+- pre-commit 自动格式化、lint、类型检查和工程规则检查。
+- pre-push 自动运行 `pnpm verify`。
+- GitHub Actions 运行 verify、coverage、e2e 和 Codex Review。
 
-## Code Structure Analysis
+## 目录结构
 
-Use CodeGraph for code maps, callers/callees, entrypoints, and impact analysis. Do not add generated `docs/ai/code-map.md` or duplicate static module indexes.
+```text
+frontend-engineering-starter/
+  apps/
+    web/          前端应用示例
+    mock-api/     本地 mock API 和运行流示例
+  packages/
+    contracts/    前后端共享数据结构和运行流 schema
+    ui/           设计 token 和通用 UI 组件
+  docs/           工程规范、接入方案和验证说明
+  scripts/        工程检查和脚手架脚本
+```
+
+关键位置：
+
+- `apps/web/src/router`：路由、标题、鉴权和权限守卫。
+- `apps/web/src/stores/auth-store.ts`：登录态、token、用户和权限状态。
+- `apps/web/src/shared/api`：统一请求、响应校验和错误归一化。
+- `apps/web/src/shared/auth`：权限判断和 `v-permission`。
+- `packages/ui`：设计 token、布局组件、状态组件、时间线和信息展示组件。
+
+## 重要文档
+
+- 总体工程规范：`docs/FRONTEND_ENGINEERING_STANDARD.md`
+- 通俗边界说明：`docs/FRONTEND_BOUNDARY_GUIDE.md`
+- 模块脚手架说明：`docs/FRONTEND_MODULE_TEMPLATE.md`
+- Codex 规则路由：`docs/CODEX_RULE_ROUTER.md`
+- Git 和合并门禁：`docs/GIT_MERGE_GATES.md`
+- GitHub 分支保护：`docs/GITHUB_BRANCH_PROTECTION.md`
+- 验证命令说明：`docs/VALIDATION.md`
+- 团队使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
+- Codex 模板分发方案：`docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md`
+
+## 版本和升级
+
+`.starter-version` 记录当前基座版本。
+
+业务项目从模板创建后，不会自动同步本仓库的新规则。升级应该手动进行：
+
+1. 看本仓库的新版本说明。
+2. 新建升级分支。
+3. 只同步需要的规则文件、脚本或 CI。
+4. 更新 `.starter-version`。
+5. 运行 `pnpm verify`。
+6. 验证通过后再合并。
+
+不要让业务项目自动跟随本仓库 `main`。
+
+## 代码结构分析
+
+分析结构、入口、调用关系和影响范围时，优先使用 CodeGraph。不要额外生成 `docs/ai/code-map.md` 或重复的静态模块索引。
