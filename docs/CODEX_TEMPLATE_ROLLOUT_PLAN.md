@@ -27,8 +27,8 @@
 1. 确认工作区干净：`git status --short --branch`
 2. 扫描敏感信息：真实 token、密钥、生产账号、私有 endpoint、内部截图、业务文档。
 3. 检查 git history 是否包含不应公开的提交。
-4. 添加明确许可证，默认建议 MIT，除非维护者选择其他许可证。
-5. 确认 `.env.example` 只有示例值，没有真实配置。
+4. 添加根目录 `LICENSE`，许可证固定 MIT。
+5. 确认根目录 `.env.example` 和 app 级 `.env.example` 只有示例值，没有真实配置。
 6. 确认 `.github/CODEOWNERS.example` 可指导下游替换 owner。
 7. 确认 `README.md`、本文件、`docs/TEAM_TEMPLATE_GUIDE.md` 说明不要 fork 业务项目。
 8. 确认 `.starter-version` 存在，并与发布 tag 对应。
@@ -46,7 +46,7 @@
 4. 克隆下游仓库。
 5. 替换 `README.md`、`package.json`、网页 title 和项目显示名。
 6. 替换 `.github/CODEOWNERS` 为下游项目真实负责人。
-7. 配置下游项目自己的 GitHub secrets、`.env.example` 和部署设置。
+7. 配置下游项目自己的 GitHub secrets、根目录和 app 级 `.env.example`、部署设置。
 8. 保留 `AGENTS.md`、`docs/CODEX_RULE_ROUTER.md`、`.github/workflows`、`.husky`、`scripts` 和 `pnpm verify`。
 9. 运行 `pnpm install`、`pnpm verify`。
 10. 首次提交应说明基于哪个 `.starter-version`。

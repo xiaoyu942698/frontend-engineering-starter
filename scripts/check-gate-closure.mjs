@@ -64,6 +64,106 @@ requireScript('check:gates', scripts['check:gates'], ['scripts/check-gate-closur
 requireScript('scaffold:feature', scripts['scaffold:feature'], ['scripts/scaffold-feature.mjs']);
 requireScript('protect:github', scripts['protect:github'], ['scripts/configure-github-branch-protection.mjs']);
 
+const license = readText('LICENSE');
+requireIncludes('LICENSE', license, 'MIT License', 'public template must declare the chosen license');
+requireIncludes('LICENSE', license, 'Permission is hereby granted', 'MIT grant terms must stay intact');
+
+const gitAttributes = readText('.gitattributes');
+requireIncludes(
+  '.gitattributes',
+  gitAttributes,
+  '* text=auto eol=lf',
+  'text files must check out with LF for deterministic formatting'
+);
+
+const starterVersion = readText('.starter-version');
+requireIncludes(
+  '.starter-version',
+  starterVersion,
+  'frontend-engineering-starter@',
+  'template version must be traceable'
+);
+
+const rootEnvExample = readText('.env.example');
+requireIncludes('.env.example', rootEnvExample, 'VITE_API_BASE_URL=', 'root env example must show API base URL');
+requireIncludes('.env.example', rootEnvExample, 'VITE_ENABLE_MOCK_AUTH=', 'root env example must show mock-auth flag');
+
+const webEnvExample = readText('apps/web/.env.example');
+requireIncludes('apps/web/.env.example', webEnvExample, 'VITE_API_BASE_URL=', 'web env example must show API base URL');
+requireIncludes(
+  'apps/web/.env.example',
+  webEnvExample,
+  'VITE_AUTH_STORAGE_KEY=',
+  'web env example must show auth storage key'
+);
+requireIncludes(
+  'apps/web/.env.example',
+  webEnvExample,
+  'VITE_REQUEST_TIMEOUT_MS=',
+  'web env example must show request timeout'
+);
+requireIncludes(
+  'apps/web/.env.example',
+  webEnvExample,
+  'VITE_ENABLE_MOCK_AUTH=',
+  'web env example must show mock-auth flag'
+);
+
+const readme = readText('README.md');
+requireIncludes('README.md', readme, 'Use this template', 'README must explain template creation flow');
+requireIncludes('README.md', readme, '不要 fork', 'README must warn downstream projects not to fork');
+requireIncludes('README.md', readme, 'AGENTS.md', 'README must keep Codex entrypoint discoverable');
+requireIncludes('README.md', readme, 'docs/TEAM_TEMPLATE_GUIDE.md', 'README must link team template guide');
+
+const rolloutPlan = readText('docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md');
+requireIncludes(
+  'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md',
+  rolloutPlan,
+  'Public Release Checklist',
+  'rollout plan must keep release checklist'
+);
+requireIncludes('docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md', rolloutPlan, 'LICENSE', 'rollout plan must mention license');
+requireIncludes(
+  'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md',
+  rolloutPlan,
+  '固定 MIT',
+  'rollout plan must treat MIT as the fixed template license'
+);
+requireIncludes(
+  'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md',
+  rolloutPlan,
+  '.env.example',
+  'rollout plan must mention environment examples'
+);
+requireIncludes(
+  'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md',
+  rolloutPlan,
+  '.github/CODEOWNERS.example',
+  'rollout plan must mention CODEOWNERS example'
+);
+requireIncludes(
+  'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md',
+  rolloutPlan,
+  '.starter-version',
+  'rollout plan must mention starter version'
+);
+
+const teamTemplateGuide = readText('docs/TEAM_TEMPLATE_GUIDE.md');
+requireIncludes(
+  'docs/TEAM_TEMPLATE_GUIDE.md',
+  teamTemplateGuide,
+  'Use this template',
+  'team guide must explain template flow'
+);
+requireIncludes('docs/TEAM_TEMPLATE_GUIDE.md', teamTemplateGuide, '不要 fork', 'team guide must warn against forks');
+requireIncludes('docs/TEAM_TEMPLATE_GUIDE.md', teamTemplateGuide, 'AGENTS.md', 'team guide must keep Codex entrypoint');
+requireIncludes(
+  'docs/TEAM_TEMPLATE_GUIDE.md',
+  teamTemplateGuide,
+  '.starter-version',
+  'team guide must mention starter version'
+);
+
 const preCommit = readText('.husky/pre-commit');
 requireIncludes('.husky/pre-commit', preCommit, 'pnpm precommit', 'local commit gate must run precommit');
 
