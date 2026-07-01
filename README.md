@@ -13,7 +13,7 @@
 
 ## 团队怎么用
 
-如果是团队新项目，不要 fork，也不要在这个模板仓库里写业务代码。
+先记住一句话：不要 fork，也不要在这个模板仓库里写业务代码。
 
 当前模板状态：
 
@@ -22,19 +22,18 @@
 - 仓库是 public GitHub template repository，License 是 MIT。
 - public 只代表模板公开；业务项目仍建议创建为 private。
 
-先判断你的项目形态：
+先问一个问题：前端和后端是不是放在同一个业务仓库？
 
-- 如果是独立前端项目：打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`，点击 GitHub 的 `Use this template`，生成自己的前端项目仓库。
-- 如果是前后端同仓项目：不要额外长期维护一个单独前端业务仓库。应把本模板作为前端工程化基座，迁入业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
+- 不是，在独立前端仓库开发：点击 GitHub 的 `Use this template`，生成自己的前端项目仓库。
+- 是，前后端在同一个仓库：不要再单独建一个长期前端仓库。把这个模板放进业务仓库的前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
 
-前后端同仓时，推荐这样做：
+无论哪种方式，都要守住这几条：
 
-1. 业务仓库仍由项目负责人创建和管理，通常设为 private。
-2. 在业务仓库里明确前端目录，例如 `frontend/`。
-3. 将本模板的前端工程化文件迁入前端目录，包括 `apps`、`packages`、`docs`、`scripts`、`package.json`、`pnpm-workspace.yaml`、`.starter-version` 等。
-4. 根目录保留或合并 `AGENTS.md`，让 Codex 能识别：前端任务进入前端目录并遵守本模板规则，后端任务按后端项目规则处理。
-5. 根目录的 `.github/workflows`、`.husky`、CODEOWNERS、secrets 和部署配置不要直接覆盖已有后端配置，应合并成适合当前业务仓库的版本。
-6. 后续是否升级模板规则，由业务项目自己决定，不自动同步上游 `main`。
+1. 业务代码只写在自己的业务仓库里。
+2. 公司、客户或未公开项目建议设为 private。
+3. 保留 `AGENTS.md`、`docs`、`scripts`、`.husky` 和 `.github/workflows`。
+4. 前后端同仓时，根目录配置要合并，不要覆盖后端已有配置。
+5. 后续升级模板规则要手动做，不会自动同步上游 `main`。
 
 两份接入文档：
 

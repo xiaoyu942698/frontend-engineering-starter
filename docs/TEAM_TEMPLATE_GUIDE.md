@@ -13,33 +13,33 @@
 
 这个仓库是前端项目的样板间。
 
-你做新项目时，不要在这个样板间里写业务代码。你应该把样板间复制或搬进自己的业务项目里，再在业务项目里开发。
+你做新项目时，不要在这个样板间里写业务代码。应该把它复制到自己的业务项目里，再开发业务代码。
 
 ## 正确用法
 
-先看你的项目是哪一种。
+先问一个问题：前端和后端是不是在同一个仓库？
 
-独立前端项目：
+不是，只有前端一个仓库：
 
 1. 打开 `https://github.com/xiaoyu942698/frontend-engineering-starter`。
 2. 点击 GitHub 上的 `Use this template`。
-3. 创建一个属于你自己的前端项目仓库。
-4. 如果是公司或客户项目，新仓库请选择 private。
-5. 把新仓库 clone 到本地。
-6. 运行 `pnpm install`。
-7. 运行 `pnpm dev` 看项目能不能启动。
-8. 运行 `pnpm verify`，确认基础检查能通过。
-9. 改项目名、页面标题、README、接口地址和负责人。
-10. 后续业务代码都写在你自己的仓库里。
+3. 生成自己的前端项目仓库。
+4. 公司、客户或未公开项目请选择 private。
+5. 在自己的仓库里开发业务代码。
 
-前后端同仓项目：
+是，前后端在同一个仓库：
 
 1. 不要长期单独维护一个前端业务仓库。
-2. 在业务仓库里确定前端目录，例如 `frontend/`、`web/` 或团队已有前端目录。
-3. 把这个模板作为前端工程化基座迁入前端目录。
-4. 根目录保留或合并 `AGENTS.md`，让 Codex 知道：前端任务进前端目录，后端任务按后端规则处理。
-5. `.github/workflows`、`.husky`、CODEOWNERS、secrets 和部署配置要合并，不要直接覆盖后端已有配置。
-6. 在业务仓库里运行前端目录要求的 `pnpm install`、`pnpm dev`、`pnpm verify`。
+2. 在业务仓库里找一个前端目录，例如 `frontend/` 或 `web/`。
+3. 把这个模板放进前端目录。
+4. 根目录的 `AGENTS.md`、`.github/workflows`、`.husky`、CODEOWNERS 要合并，不要覆盖后端已有配置。
+5. 后续业务代码仍然写在真正的业务仓库里。
+
+第一次拿到项目后，至少做三件事：
+
+1. 运行 `pnpm install`。
+2. 运行 `pnpm dev` 看能不能启动。
+3. 运行 `pnpm verify` 看检查能不能通过。
 
 ## 不要这样做
 
@@ -56,7 +56,7 @@
 
 用 `Use this template` 不一样。它是复制一份新项目，你可以把新项目设成 private。
 
-如果你们的业务项目是前后端同仓，`Use this template` 可以只作为拿到模板代码的方式。最终业务代码仍放在真正的业务仓库里，不要让临时复制出来的前端仓库变成长期业务仓库。
+如果你们是前后端同仓，`Use this template` 可以只用来拿模板代码。最终业务代码仍放在真正的业务仓库里。
 
 ## Codex 怎么用
 
@@ -138,9 +138,10 @@ Codex 应该自己完成这些事：
 模板地址：https://github.com/xiaoyu942698/frontend-engineering-starter
 当前稳定版本：v0.1.0。
 不要 fork，不要在模板仓库写业务代码。
-如果是独立前端项目，可以点 Use this template 生成自己的项目仓库；公司、客户或未公开业务项目建议设为 private。
-如果是前后端同仓项目，把模板迁入业务仓库的前端目录，并合并根目录 AGENTS.md、.github/workflows、.husky 和 CODEOWNERS。
-接入后保留 AGENTS.md、docs、scripts、.husky 和 .github/workflows。
+如果项目只有前端：点 Use this template，生成自己的前端仓库。
+如果项目是前后端同仓：把模板放进业务仓库的前端目录，比如 frontend/ 或 web/。
+公司、客户或未公开项目建议设为 private。
+接入后保留 AGENTS.md、docs、scripts、.husky 和 .github/workflows；同仓项目要合并这些配置，不要覆盖后端配置。
 平时给 Codex 直接描述需求即可，Codex 会按项目里的 AGENTS.md 和工程化规则开发。
 提交前至少跑 pnpm verify。
 ```
