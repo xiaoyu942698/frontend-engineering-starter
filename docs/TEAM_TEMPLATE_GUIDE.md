@@ -78,23 +78,15 @@ AGENTS.md
 
 合并的意思是：已有文件就把规则加进去，不要直接覆盖。尤其是 `.github/workflows`、`.husky`、`.github/CODEOWNERS`，可能已经有后端规则。
 
-## 第一次检查
+## 第一次接入后
 
-进入前端目录后运行：
+让 Codex 检查三件事：
 
-```powershell
-pnpm install
-pnpm dev
-pnpm verify
-```
+1. 依赖能不能安装。
+2. 页面能不能启动。
+3. 提交前验证能不能通过。
 
-如果前端就在业务仓库根目录，就直接运行。
-
-如果前端在 `frontend/`，就先运行：
-
-```powershell
-cd frontend
-```
+如果前端在 `frontend/` 或 `web/` 这种子目录，Codex 应该先进入前端目录再检查。
 
 ## Codex 怎么用
 
@@ -115,7 +107,7 @@ cd frontend
 1. 看模板仓库 release 说明。
 2. 新建升级分支。
 3. 只复制需要升级的规则、脚本或 CI。
-4. 跑 `pnpm verify`。
+4. 让 Codex 完成提交前验证。
 5. 检查通过后再合并。
 
 ## 直接发给团队
@@ -134,5 +126,5 @@ cd frontend
 前后端同仓项目要合并 AGENTS.md、.github、.husky 等根目录配置，不要覆盖后端配置。
 
 平时给 Codex 直接描述需求即可。
-提交前至少跑 pnpm verify。
+提交前验证由 Codex 负责，不需要使用者手动记命令。
 ```

@@ -70,7 +70,7 @@
 2. 业务项目如果有私有代码，必须设为 private。
 3. 替换 `README.md`、`package.json`、网页 title、`.github/CODEOWNERS`、secrets、环境变量和部署配置。
 4. 保留 `AGENTS.md`、`docs/CODEX_RULE_ROUTER.md`、`.github/workflows`、`.husky`、`scripts` 和 `pnpm verify`。
-5. 运行 `pnpm install`、`pnpm verify`。
+5. 运行 `pnpm install`，并在提交前运行 `pnpm verify`。
 6. 首次提交说明基于哪个 `.starter-version`。
 
 ### Full-stack Repository
@@ -98,7 +98,7 @@
 5. 前后端同仓时，只迁移前端目录和已合并的根目录前端门禁配置，不改后端规则。
 6. 如果新规则会卡住旧代码，先记录影响，再决定是修代码还是延后升级。
 7. 更新下游 `.starter-version`。
-8. 运行 `pnpm verify`。
+8. Codex 在提交前运行 `pnpm verify`。
 9. 如果升级影响核心链路或可见页面，加跑 `pnpm test:coverage` 和 `pnpm verify:e2e`。
 10. 提交时说明升级版本、迁移文件、验证命令和剩余风险。
 
@@ -139,7 +139,7 @@ pnpm test:coverage
 pnpm verify:e2e
 ```
 
-下游业务项目可根据项目阶段缩小验证范围，但提交前至少应运行 `pnpm verify` 或项目定义的等价验证命令。
+下游业务项目可根据项目阶段缩小验证范围，但 Codex 或维护者提交前至少应运行 `pnpm verify` 或项目定义的等价验证命令。普通使用者只需要描述需求，不需要在提示词里重复验证命令。
 
 修改发布状态、版本说明或接入方式时，还要同步检查：
 

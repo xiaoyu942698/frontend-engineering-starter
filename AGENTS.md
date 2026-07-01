@@ -56,6 +56,7 @@ Do not bypass this file by editing from a single source file alone. If a task to
 - Use Conventional Commits: `<type>(<scope>): <subject>`.
 - Allowed commit scopes are defined in `commitlint.config.cjs`.
 - When Codex or any AI agent performs commit, push, PR, or merge work, it must not use `--no-verify`, skip Husky hooks, skip `pnpm verify`, bypass required GitHub checks, force-push to protected branches, or ask the user to merge around failed checks.
+- Before any Codex-authored commit, Codex must run `pnpm verify` from the project root. If this starter is embedded under a frontend subdirectory such as `frontend/` or `web/`, run `pnpm verify` from that frontend directory before committing.
 - Manual human `--no-verify` use is outside AI automation policy, but any later AI-assisted PR must still pass the full local and GitHub gates.
 - Before adding a shared frontend abstraction, verify whether Element Plus, Vue Flow, TanStack Vue Query, Axios, Zod, or another approved dependency already solves it.
 
@@ -104,3 +105,4 @@ pnpm verify:e2e
 
 For UI changes, also run or manually smoke the app at `http://127.0.0.1:5178`.
 Use `pnpm verify:e2e` when the changed surface affects routing, permissions, runtime flow, approvals, or visible user journeys.
+When Codex is asked to commit, push, open a PR, or prepare merge-ready work, `pnpm verify` is mandatory before the commit. Do not ask ordinary users to remember this command in their prompt.

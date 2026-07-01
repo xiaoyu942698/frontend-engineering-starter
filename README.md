@@ -86,7 +86,7 @@ Codex 必须遵守：
 - 先读 `AGENTS.md`。
 - 新模块优先用 `pnpm scaffold:feature`。
 - 修改接口、权限、UI、测试、CI 或 Git 门禁时，查对应 `docs` 文档。
-- 提交前运行对应验证命令。
+- 提交前必须自己运行对应验证命令，至少包含 `pnpm verify`。
 - 不允许使用 `--no-verify` 绕过检查。
 
 ## 常用命令
@@ -111,7 +111,9 @@ pnpm protect:github --branch main
 
 注意：GitHub Free 的 private repo 可能无法启用 branch protection。代码里的门禁资产可以准备好，但远端强制拦截能力取决于 GitHub 计划。
 
-## 提交前必须确认
+## 提交前验证规则
+
+这部分是给 Codex 和维护者看的，普通使用者不需要在提示词里重复这些命令。
 
 普通改动至少运行：
 
@@ -179,7 +181,7 @@ frontend-engineering-starter/
 2. 新建升级分支。
 3. 只同步需要的规则文件、脚本或 CI。
 4. 更新 `.starter-version`。
-5. 运行 `pnpm verify`。
+5. 由 Codex 或维护者运行提交前验证。
 6. 验证通过后再合并。
 
 不要让业务项目自动跟随本仓库 `main`。
