@@ -49,6 +49,7 @@ function createGateProject(overrides = {}) {
     '.github/pull_request_template.md':
       'pnpm lint:standards\npnpm lint:engineering\npnpm build\npnpm test:coverage\npnpm verify:e2e\n--no-verify\nCI / coverage\nCI / e2e\nCodex Review / codex_review\n',
     LICENSE: 'MIT License\n\nPermission is hereby granted, free of charge,\n',
+    '.gitattributes': '* text=auto eol=lf\n',
     '.starter-version': 'frontend-engineering-starter@0.1.0\n',
     '.env.example':
       '# Root environment example. Copy app-level examples before configuring real values.\nVITE_API_BASE_URL=\nVITE_ENABLE_MOCK_AUTH=true\n',
@@ -129,6 +130,14 @@ test('requires a public template license before release', () => {
   });
 
   expectGateFailure(projectDir, 'LICENSE: required file is missing.');
+});
+
+test('requires text files to check out with LF for deterministic formatting', () => {
+  const projectDir = createGateProject({
+    '.gitattributes': null
+  });
+
+  expectGateFailure(projectDir, '.gitattributes: required file is missing.');
 });
 
 test('requires a root environment example before release', () => {

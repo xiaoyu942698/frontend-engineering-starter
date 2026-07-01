@@ -68,6 +68,14 @@ const license = readText('LICENSE');
 requireIncludes('LICENSE', license, 'MIT License', 'public template must declare the chosen license');
 requireIncludes('LICENSE', license, 'Permission is hereby granted', 'MIT grant terms must stay intact');
 
+const gitAttributes = readText('.gitattributes');
+requireIncludes(
+  '.gitattributes',
+  gitAttributes,
+  '* text=auto eol=lf',
+  'text files must check out with LF for deterministic formatting'
+);
+
 const starterVersion = readText('.starter-version');
 requireIncludes(
   '.starter-version',
