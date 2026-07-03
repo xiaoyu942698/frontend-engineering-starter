@@ -19,7 +19,7 @@
     "format:check": "prettier --check .",
     "test": "pnpm -r test && pnpm test:standards && pnpm test:engineering",
     "test:standards": "node --test scripts/check-naming-and-comments.test.mjs",
-    "test:engineering": "node --test scripts/check-engineering-rules.test.mjs scripts/check-gate-closure.test.mjs scripts/configure-github-branch-protection.test.mjs scripts/scaffold-feature.test.mjs",
+    "test:engineering": "node --test scripts/check-engineering-rules.test.mjs scripts/check-gate-closure.test.mjs scripts/check-web-vite-config.test.mjs scripts/configure-github-branch-protection.test.mjs scripts/scaffold-feature.test.mjs",
     "test:coverage": "pnpm --filter @agent-flow/contracts test:coverage && pnpm --filter @agent-flow/mock-api test:coverage && pnpm --filter @agent-flow/web test:coverage",
     "test:e2e": "pnpm --filter @agent-flow/web test:e2e",
     "verify:e2e": "pnpm --filter @agent-flow/web test:e2e",

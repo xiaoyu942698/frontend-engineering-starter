@@ -16,7 +16,14 @@ const parsedEnv = EnvSchema.parse({
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
   authStorageKey: import.meta.env.VITE_AUTH_STORAGE_KEY ?? 'agent-flow.auth',
   requestTimeoutMs: Number(import.meta.env.VITE_REQUEST_TIMEOUT_MS ?? 10_000),
-  enableMockAuth: readBoolean(import.meta.env.VITE_ENABLE_MOCK_AUTH, true)
+  enableMockAuth: readBoolean(import.meta.env.VITE_ENABLE_MOCK_AUTH, false)
 });
 
+if (import.meta.env.PROD && parsedEnv.enableMockAuth) {
+  throw new Error('VITE_ENABLE_MOCK_AUTH must be disabled in production builds.');
+}
+
+/**
+ * Validated browser runtime configuration consumed by API, auth, and runtime adapters.
+ */
 export const appEnv = parsedEnv;

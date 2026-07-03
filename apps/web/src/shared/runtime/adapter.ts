@@ -14,12 +14,27 @@ import { normalizeApiError } from '@/shared/api/errors';
  * Runtime boundary consumed by feature components instead of backend SDKs.
  */
 export interface RuntimeAdapter {
+  /**
+   * Loads catalog data required to render workflow, agent, and tool surfaces.
+   */
   listWorkflows(): Promise<RuntimeSnapshot>;
+
+  /**
+   * Starts a run and returns the first state snapshot needed by the session view.
+   */
   startRun(
     workflow: WorkflowDefinition,
     input: string
   ): Promise<{ run: Run; events: RunEvent[]; approval: HumanApproval | null }>;
+
+  /**
+   * Subscribes to ordered run events and returns a disposer for component cleanup.
+   */
   streamRunEvents(runId: string, onEvent: (event: RunEvent) => void, onError?: (error: unknown) => void): () => void;
+
+  /**
+   * Resolves a human approval gate and returns the finalized runtime output.
+   */
   submitHumanDecision(
     runId: string,
     approvalId: string,
@@ -46,6 +61,7 @@ export class MockRuntimeAdapter implements RuntimeAdapter {
       try {
         onEvent(runEventSchema.parse(JSON.parse((message as MessageEvent).data)));
       } catch (error) {
+        // Reason: once an event violates the contract, later events can no longer be trusted in order.
         onError?.(normalizeApiError(error));
         source.close();
       }

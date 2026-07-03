@@ -36,6 +36,7 @@ const bannedAgentRuntimeImports = new Set([
   '@openai/agents',
   '@google/adk'
 ]);
+const envExampleFiles = ['.env.example', 'apps/web/.env.example'];
 
 const failures = [];
 
@@ -194,6 +195,47 @@ function checkCssTokens(filePath, content, offset = 0) {
   }
 }
 
+function isTruthyEnvValue(value) {
+  return ['1', 'true', 'yes', 'on'].includes(
+    String(value ?? '')
+      .trim()
+      .toLowerCase()
+  );
+}
+
+function findEnvAssignment(content, variableName) {
+  const lines = content.split(/\r?\n/);
+
+  for (const [index, line] of lines.entries()) {
+    const match = line.match(new RegExp(`^\\s*${variableName}\\s*=\\s*([^#\\r\\n]*)`));
+    if (match) {
+      return {
+        line: index + 1,
+        value: match[1].trim()
+      };
+    }
+  }
+
+  return null;
+}
+
+function checkMockAuthExampleDefault(relativePath) {
+  const filePath = path.join(rootDir, relativePath);
+  if (!fs.existsSync(filePath)) return;
+
+  const assignment = findEnvAssignment(readFile(filePath), 'VITE_ENABLE_MOCK_AUTH');
+  if (assignment && isTruthyEnvValue(assignment.value)) {
+    report(filePath, assignment.line, 'Mock auth must default to false in committed env examples.');
+  }
+}
+
+function checkProtectedMockAuthEnv() {
+  const isProtectedGate = isTruthyEnvValue(process.env.CI) || process.env.NODE_ENV === 'production';
+  if (isProtectedGate && isTruthyEnvValue(process.env.VITE_ENABLE_MOCK_AUTH)) {
+    failures.push('process.env:1: VITE_ENABLE_MOCK_AUTH must be false in CI or production gates.');
+  }
+}
+
 function readPackageJson(filePath) {
   try {
     return JSON.parse(readFile(filePath));
@@ -270,6 +312,12 @@ for (const filePath of sourceFiles) {
 for (const packageFile of packageFiles) {
   checkDependencyPolicy(packageFile);
 }
+
+for (const envExampleFile of envExampleFiles) {
+  checkMockAuthExampleDefault(envExampleFile);
+}
+
+checkProtectedMockAuthEnv();
 
 if (failures.length > 0) {
   console.error('Engineering rule check failed:\n');

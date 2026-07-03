@@ -1,6 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { useAuthStore, type AuthSession } from './auth-store';
+import type { AuthSession, useAuthStore as useAuthStoreType } from './auth-store';
+
+let useAuthStore: typeof useAuthStoreType;
 
 const session: AuthSession = {
   accessToken: 'token-1',
@@ -13,9 +15,23 @@ const session: AuthSession = {
   expiresAt: '2026-06-30T00:00:00.000Z'
 };
 
-beforeEach(() => {
+async function loadAuthStore(mockAuth: 'true' | 'false' = 'true') {
+  vi.unstubAllEnvs();
+  vi.stubEnv('VITE_ENABLE_MOCK_AUTH', mockAuth);
+  vi.resetModules();
+  const authStoreModule = await import('./auth-store');
+  useAuthStore = authStoreModule.useAuthStore;
   setActivePinia(createPinia());
   window.localStorage.clear();
+}
+
+beforeEach(async () => {
+  await loadAuthStore();
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.resetModules();
 });
 
 describe('auth store', () => {
@@ -29,6 +45,16 @@ describe('auth store', () => {
     expect(authStore.permissions).toContain('*');
     expect(authStore.token).toBeNull();
     expect(authStore.hasPermission(['workflow:admin'])).toBe(true);
+  });
+
+  it('does not hydrate mock auth when mock auth is disabled', async () => {
+    await loadAuthStore('false');
+
+    const authStore = useAuthStore();
+    authStore.hydrate();
+
+    expect(authStore.isAuthenticated).toBe(false);
+    expect(authStore.permissions).toEqual([]);
   });
 
   it('persists and clears a stored session', () => {

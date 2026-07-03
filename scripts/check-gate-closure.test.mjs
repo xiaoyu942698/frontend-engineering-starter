@@ -24,7 +24,7 @@ function createGateProject(overrides = {}) {
         test: 'pnpm -r test && pnpm test:standards && pnpm test:engineering',
         'lint:engineering': 'node scripts/check-engineering-rules.mjs',
         'test:engineering':
-          'node --test scripts/check-engineering-rules.test.mjs scripts/check-gate-closure.test.mjs scripts/configure-github-branch-protection.test.mjs scripts/scaffold-feature.test.mjs',
+          'node --test scripts/check-engineering-rules.test.mjs scripts/check-gate-closure.test.mjs scripts/check-web-vite-config.test.mjs scripts/configure-github-branch-protection.test.mjs scripts/scaffold-feature.test.mjs',
         'test:coverage':
           'pnpm --filter @agent-flow/contracts test:coverage && pnpm --filter @agent-flow/mock-api test:coverage && pnpm --filter @agent-flow/web test:coverage',
         'verify:e2e': 'pnpm --filter @agent-flow/web test:e2e',
@@ -52,9 +52,9 @@ function createGateProject(overrides = {}) {
     '.gitattributes': '* text=auto eol=lf\n',
     '.starter-version': 'frontend-engineering-starter@0.1.0\n',
     '.env.example':
-      '# Root environment example. Copy app-level examples before configuring real values.\nVITE_API_BASE_URL=\nVITE_ENABLE_MOCK_AUTH=true\n',
+      '# Root environment example. Copy app-level examples before configuring real values.\nVITE_API_BASE_URL=\nVITE_ENABLE_MOCK_AUTH=false\n',
     'apps/web/.env.example':
-      'VITE_API_BASE_URL=\nVITE_AUTH_STORAGE_KEY=agent-flow.auth\nVITE_REQUEST_TIMEOUT_MS=10000\nVITE_ENABLE_MOCK_AUTH=true\n',
+      'VITE_API_BASE_URL=\nVITE_AUTH_STORAGE_KEY=agent-flow.auth\nVITE_REQUEST_TIMEOUT_MS=10000\nVITE_ENABLE_MOCK_AUTH=false\n',
     'README.md': 'Use this template\n不要 fork\nAGENTS.md\ndocs/TEAM_TEMPLATE_GUIDE.md\n',
     'AGENTS.md': '--no-verify\npnpm verify\nrequired GitHub checks\nFRONTEND_BOUNDARY_GUIDE\nCODEX_RULE_ROUTER\n',
     'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md':

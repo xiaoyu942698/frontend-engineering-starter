@@ -24,6 +24,9 @@ const HumanDecisionResultSchema = z.object({
   artifacts: z.array(artifactSchema).default([])
 });
 
+/**
+ * Project-wide Axios instance; feature code should use the typed helpers below instead of importing Axios directly.
+ */
 export const apiClient = axios.create({
   baseURL: appEnv.apiBaseUrl,
   timeout: appEnv.requestTimeoutMs
@@ -43,6 +46,7 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(undefined, (error) => {
   const normalizedError = normalizeApiError(error);
 
+  // Reason: stale credentials must be removed before the next guard or directive reads auth state.
   if (normalizedError.status === 401) {
     useAuthStore().clearSession();
   }
