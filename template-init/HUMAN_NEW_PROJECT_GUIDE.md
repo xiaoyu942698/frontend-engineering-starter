@@ -4,6 +4,8 @@
 
 模板仓库地址：`https://github.com/xiaoyu942698/frontend-engineering-starter.git`
 
+模板分支：`main`
+
 具体执行细节在模板仓库的 `template-init/CODEX_NEW_PROJECT_RUNBOOK.md`。Codex 读取那份 runbook 后，应该能直接在你指定的目录里搭好完整项目。
 
 ## 推荐提示词
@@ -20,6 +22,7 @@
 - 项目名：my-project
 - 项目显示名：My Project
 - 创建模式：local-only
+- 模板分支：main
 
 要求：
 - 不要在模板仓库写业务代码。
@@ -37,13 +40,38 @@
 - 验证通过后提交并推送 main
 ```
 
+如果前后端在同一个项目文件夹下，使用这段，把项目根目录、前端目录和项目名改掉：
+
+```text
+请使用模板仓库 https://github.com/xiaoyu942698/frontend-engineering-starter.git，
+并读取其中的 template-init/CODEX_NEW_PROJECT_RUNBOOK.md，
+帮我在现有前后端同仓项目里创建前端工程。
+
+输入：
+- 项目形态：fullstack-monorepo
+- 业务项目根目录：D:\Work\MyFullstack
+- 前端目录：D:\Work\MyFullstack\frontend
+- 项目名：my-fullstack-frontend
+- 项目显示名：My Fullstack Frontend
+- 创建模式：local-only
+- 模板分支：main
+
+要求：
+- 不要覆盖后端已有文件。
+- 不要在 frontend 目录里初始化嵌套 Git。
+- 如果业务项目根目录已有 .git，就使用根目录 Git。
+- 只把前端模板生成到前端目录。
+- 安装依赖并在前端目录运行验证。
+- 验证结果和未完成事项最后告诉我。
+```
+
 ## Codex 应该做什么
 
 Codex 不是让你手动照 README 复制文件，而是应该直接完成这些事：
 
-1. 确认当前模板仓库和版本。
+1. 确认模板仓库 `main` 分支和版本。
 2. 检查目标目录是否安全，避免覆盖已有文件。
-3. 从模板当前提交生成一个干净的新项目。
+3. 从模板 `main` 分支生成一个干净的新项目。
 4. 初始化新项目 Git。
 5. 改 `package.json`、`README.md`、必要的 owner 和项目名。
 6. 保留 `AGENTS.md`、`docs`、`scripts`、`.github`、`.husky` 等工程化资产。
@@ -72,6 +100,7 @@ Codex 不是让你手动照 README 复制文件，而是应该直接完成这些
 新项目建好后，后续开发就不再走“初始化模板”的逻辑，而是走新项目里的工程化规则：
 
 - Codex 先读新项目根目录 `AGENTS.md`。
+- 前后端同仓时，Codex 先读业务仓库根目录规则，再进入前端目录读取前端工程化规则。
 - 新页面优先用 `pnpm scaffold:feature`。
 - API 走 `apps/web/src/shared/api`。
 - 权限走 route meta 和 `v-permission`。
