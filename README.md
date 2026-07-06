@@ -169,6 +169,11 @@ frontend-engineering-starter/
 - 团队使用说明：`docs/TEAM_TEMPLATE_GUIDE.md`
 - Codex 模板分发方案：`docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md`
 
+模板初始化文档独立放在根目录 `template-init/`：
+
+- Codex 新项目初始化执行：`template-init/CODEX_NEW_PROJECT_RUNBOOK.md`
+- 给 Codex 创建新项目的说明：`template-init/HUMAN_NEW_PROJECT_GUIDE.md`
+
 ## 版本和升级
 
 `.starter-version` 记录当前基座版本。
