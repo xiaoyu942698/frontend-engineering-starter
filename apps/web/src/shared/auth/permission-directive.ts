@@ -26,6 +26,9 @@ function normalizeValue(value: PermissionDirectiveValue) {
   };
 }
 
+/**
+ * Vue directive for hiding controls when the current auth context lacks permissions.
+ */
 export const permissionDirective: Directive<HTMLElement, PermissionDirectiveValue> = {
   mounted(el, binding) {
     applyPermission(el, binding.value);

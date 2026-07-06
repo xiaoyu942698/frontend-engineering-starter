@@ -33,6 +33,9 @@ interface AuthState {
   hydrated: boolean;
 }
 
+/**
+ * Zod schemas for persisted auth payloads.
+ */
 const AppUserSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -63,6 +66,7 @@ function readStoredSession() {
     const parsed = AuthSessionSchema.safeParse(JSON.parse(raw));
     return parsed.success ? parsed.data : null;
   } catch {
+    // Reason: a corrupt local session should fall back to normal hydration instead of blocking boot.
     return null;
   }
 }
@@ -78,6 +82,9 @@ function writeStoredSession(session: AuthSession | null) {
   window.localStorage.setItem(appEnv.authStorageKey, JSON.stringify(session));
 }
 
+/**
+ * Auth state used by route guards, permission directives, and API authorization headers.
+ */
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     accessToken: null,
@@ -98,6 +105,7 @@ export const useAuthStore = defineStore('auth', {
         this.accessToken = storedSession.accessToken;
         this.currentUser = storedSession.user;
       } else if (appEnv.enableMockAuth) {
+        // Reason: the starter must run without a real identity provider while keeping the auth boundary visible.
         this.accessToken = null;
         this.currentUser = mockUser;
       }

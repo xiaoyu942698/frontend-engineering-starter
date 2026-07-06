@@ -12,6 +12,9 @@ import {
   submitHumanDecision
 } from './runtime';
 
+/**
+ * Builds the Fastify mock API used by the starter web app and integration tests.
+ */
 export function createApp() {
   const app = Fastify({ logger: true });
 
@@ -52,6 +55,7 @@ export function createApp() {
     const run = getRun(runId);
     if (!run) return reply.code(404).send({ code: 'RUN_NOT_FOUND', message: 'Run not found.' });
 
+    // Reason: the mock runtime uses SSE so adapters exercise the same streaming contract as a real backend.
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',

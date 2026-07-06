@@ -54,6 +54,7 @@ requireScript('lint', scripts.lint, ['lint:standards', 'lint:engineering']);
 requireScript('test', scripts.test, ['test:standards', 'test:engineering']);
 requireScript('lint:engineering', scripts['lint:engineering'], ['scripts/check-engineering-rules.mjs']);
 requireScript('test:engineering', scripts['test:engineering'], ['scripts/check-engineering-rules.test.mjs']);
+requireScript('test:engineering', scripts['test:engineering'], ['scripts/check-web-vite-config.test.mjs']);
 requireScript('test:coverage', scripts['test:coverage'], [
   '@agent-flow/contracts',
   '@agent-flow/mock-api',

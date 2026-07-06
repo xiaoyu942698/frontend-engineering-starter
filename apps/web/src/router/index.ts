@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/auth-store';
 import { canAccess } from '@/shared/auth/permissions';
 
+/**
+ * Application router configured with route-level auth and permission metadata.
+ */
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -57,6 +60,7 @@ router.beforeEach((to) => {
     }
   );
 
+  // Reason: permission denial keeps the original target for a later retry after auth changes.
   if (!allowed) {
     return {
       path: '/403',

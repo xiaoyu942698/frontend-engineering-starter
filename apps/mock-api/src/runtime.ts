@@ -8,6 +8,9 @@ const events = new Map<string, RunEvent[]>();
 const approvals = new Map<string, HumanApproval>();
 const artifacts = new Map<string, Artifact[]>();
 
+/**
+ * Generates timestamps at mutation time so event order remains visible in tests and demos.
+ */
 function getCurrentTimestamp() {
   return new Date().toISOString();
 }
@@ -57,6 +60,7 @@ export function createMockRun(workflowId: string, input: string): Run {
   runs.set(runId, run);
   approvals.set(approvalId, approval);
   artifacts.set(runId, []);
+  // Reason: every demo run starts with enough ordered events to exercise timeline and approval surfaces.
   events.set(runId, [
     createRunEvent(runId, 1, {
       type: 'run_started',

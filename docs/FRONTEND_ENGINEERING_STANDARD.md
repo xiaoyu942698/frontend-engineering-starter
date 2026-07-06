@@ -139,7 +139,7 @@ Pinia 只管理客户端状态：
 - 路由级权限用 route meta。
 - 按钮、菜单项、危险操作用 `v-permission` 或 `authStore.hasPermission()`。
 - 后端仍必须做权限校验；前端权限只负责体验和入口控制。
-- Starter 默认 `VITE_ENABLE_MOCK_AUTH=true`，提供本地 `*` 权限账号，方便模板演示。真实项目必须替换为后端会话或 SSO。
+- Starter 默认 `VITE_ENABLE_MOCK_AUTH=false`。如需本地演示，可在未提交的 `.env.local` 中显式设为 `true`，它会提供本地 `*` 权限账号。真实项目和生产构建必须保持关闭并替换为后端会话或 SSO。
 
 ## 8. Loading / Empty / Error
 
@@ -254,7 +254,7 @@ Pinia 只管理客户端状态：
 VITE_API_BASE_URL=
 VITE_AUTH_STORAGE_KEY=agent-flow.auth
 VITE_REQUEST_TIMEOUT_MS=10000
-VITE_ENABLE_MOCK_AUTH=true
+VITE_ENABLE_MOCK_AUTH=false
 ```
 
 规则：

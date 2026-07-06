@@ -7,6 +7,7 @@
 - 不提交真实 `.env`、token、cookie、私有 endpoint、生产账号或密钥。
 - Vite 环境变量必须以 `VITE_` 开头。
 - 组件不能直接读取 `import.meta.env`，必须通过 `shared/config/env`。
+- `VITE_ENABLE_MOCK_AUTH` 必须默认关闭；只允许在未提交的本地环境文件中为演示显式开启。
 - 不在日志、错误信息或 UI 中展示敏感 token。
 
 ## 鉴权与权限

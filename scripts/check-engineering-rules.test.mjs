@@ -16,17 +16,18 @@ function createTempProject() {
   return projectDir;
 }
 
-function runEngineeringRules(projectDir) {
+function runEngineeringRules(projectDir, env = {}) {
   return execFileSync(process.execPath, [scriptPath], {
     cwd: projectDir,
+    env: { ...process.env, ...env },
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe']
   });
 }
 
-function expectFailure(projectDir, expectedMessage) {
+function expectFailure(projectDir, expectedMessage, env) {
   assert.throws(
-    () => runEngineeringRules(projectDir),
+    () => runEngineeringRules(projectDir, env),
     (error) => {
       const output = `${error.stdout ?? ''}${error.stderr ?? ''}`;
       return output.includes(expectedMessage);
@@ -61,4 +62,22 @@ test('blocks duplicate UI framework dependencies', () => {
   fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify({ dependencies: { antd: '^5.0.0' } }), 'utf8');
 
   expectFailure(projectDir, 'Duplicate UI framework dependency');
+});
+
+test('blocks committed env examples that enable mock auth by default', () => {
+  const projectDir = createTempProject();
+  fs.writeFileSync(path.join(projectDir, '.env.example'), 'VITE_ENABLE_MOCK_AUTH=true\n', 'utf8');
+  fs.mkdirSync(path.join(projectDir, 'apps/web'), { recursive: true });
+  fs.writeFileSync(path.join(projectDir, 'apps/web/.env.example'), 'VITE_ENABLE_MOCK_AUTH=false\n', 'utf8');
+
+  expectFailure(projectDir, 'Mock auth must default to false in committed env examples');
+});
+
+test('blocks mock auth process env in CI and production gates', () => {
+  const projectDir = createTempProject();
+
+  expectFailure(projectDir, 'VITE_ENABLE_MOCK_AUTH must be false in CI or production', {
+    CI: 'true',
+    VITE_ENABLE_MOCK_AUTH: 'true'
+  });
 });
