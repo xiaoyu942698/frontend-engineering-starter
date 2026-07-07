@@ -33,6 +33,7 @@ Codex 开始前必须拿到这些输入：
 - `projectTitle`：README 和页面标题使用的人类可读名称。
 - `owner`：`.github/CODEOWNERS` 的团队或账号。
 - `initialFeature`：初始化后要不要顺手创建第一个业务模块。
+- `enableLocalDemoAuth`：是否创建本地演示登录配置，默认使用 `true`。
 - `monorepoRoot`：前后端同仓根目录，例如 `D:\Work\MyFullstack`。
 - `frontendPath`：前后端同仓里的前端目录，例如 `D:\Work\MyFullstack\frontend`。
 
@@ -192,6 +193,21 @@ Codex 至少要处理这些位置：
 - `.env.example` 和 `apps/web/.env.example`
   - 只保留示例值。
   - 不写真实密钥。
+  - 保持 `VITE_ENABLE_MOCK_AUTH=false`，不要为了本地演示改动示例文件。
+
+本地演示登录单独写入不提交的 app 级环境文件。默认允许 Codex 创建：
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.local -Force
+```
+
+并在 `apps/web/.env.local` 中设置：
+
+```text
+VITE_ENABLE_MOCK_AUTH=true
+```
+
+说明：`.env.local` 已被 `.gitignore` 忽略，只用于本机演示。Codex 不得提交 `.env.local`，也不得把 `VITE_ENABLE_MOCK_AUTH=true` 写进 `.env.example`、CI 或生产配置。
 
 不要删除：
 
@@ -225,9 +241,17 @@ $env:VITE_ENABLE_MOCK_AUTH='true'
 corepack pnpm verify:e2e
 ```
 
-说明：模板默认关闭 mock auth。直接运行 `verify:e2e` 时，首页可能因权限守卫进入 `/403`，这不是页面缺失，而是测试环境没有本地登录态。
+说明：模板默认关闭 mock auth。没有 `apps/web/.env.local` 或临时 `VITE_ENABLE_MOCK_AUTH=true` 时，首页可能因权限守卫进入 `/403`，这不是页面缺失，而是测试环境没有本地登录态。
 
 ## 步骤七：本地启动
+
+本地启动前，确认本机演示登录配置存在：
+
+```powershell
+Test-Path apps/web/.env.local
+```
+
+如果不存在且用户没有禁用本地演示登录，按步骤五创建 `apps/web/.env.local` 并开启 `VITE_ENABLE_MOCK_AUTH=true`。
 
 ```powershell
 corepack pnpm dev
@@ -290,6 +314,7 @@ Codex 完成后必须告诉用户：
 - 使用的模板源路径和 `.starter-version`。
 - Git 状态：是否已 `git init`、是否配置 remote、是否已提交或推送。
 - 已改名的位置：`package.json`、`README.md`、CODEOWNERS 是否已配置。
+- 是否创建了未提交的 `apps/web/.env.local` 本地演示登录配置。
 - 已运行的验证命令和结果。
 - 本地启动地址。
 - 未完成但需要用户决定的事项，例如远端仓库、CODEOWNERS、secrets、部署环境、真实 API。

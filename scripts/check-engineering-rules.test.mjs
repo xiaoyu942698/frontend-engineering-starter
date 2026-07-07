@@ -57,6 +57,28 @@ test('blocks hardcoded colors in feature styles', () => {
   expectFailure(projectDir, 'Use design tokens instead of hardcoded color');
 });
 
+test('blocks v-html in Vue components', () => {
+  const projectDir = createTempProject();
+  fs.writeFileSync(
+    path.join(projectDir, 'apps/web/src/features/orders/components/OrderTable.vue'),
+    `<template>\n  <section v-html="rawHtml" />\n</template>\n`,
+    'utf8'
+  );
+
+  expectFailure(projectDir, 'Do not use v-html');
+});
+
+test('blocks direct DOM HTML injection', () => {
+  const projectDir = createTempProject();
+  fs.writeFileSync(
+    path.join(projectDir, 'apps/web/src/features/orders/components/render-order.ts'),
+    `export function renderOrder(element: HTMLElement, rawHtml: string) {\n  element.innerHTML = rawHtml;\n}\n`,
+    'utf8'
+  );
+
+  expectFailure(projectDir, 'Do not assign HTML strings directly');
+});
+
 test('blocks duplicate UI framework dependencies', () => {
   const projectDir = createTempProject();
   fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify({ dependencies: { antd: '^5.0.0' } }), 'utf8');

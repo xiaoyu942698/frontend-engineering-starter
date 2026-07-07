@@ -148,6 +148,17 @@ test('requires a root environment example before release', () => {
   expectGateFailure(projectDir, '.env.example: required file is missing.');
 });
 
+test('blocks machine-local Codex paths in the public agent guide', () => {
+  const localCodexPath = ['C:', 'Users', 'template-owner', '.codex', 'scripts', 'ensure-codegraph-global.ps1'].join(
+    '\\'
+  );
+  const projectDir = createGateProject({
+    'AGENTS.md': `--no-verify\npnpm verify\nrequired GitHub checks\nFRONTEND_BOUNDARY_GUIDE\nCODEX_RULE_ROUTER\n${localCodexPath}\n`
+  });
+
+  expectGateFailure(projectDir, 'machine-local user profile paths');
+});
+
 test('requires the rollout plan to treat MIT as the fixed template license', () => {
   const projectDir = createGateProject({
     'docs/CODEX_TEMPLATE_ROLLOUT_PLAN.md':

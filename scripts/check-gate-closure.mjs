@@ -32,6 +32,12 @@ function requireIncludes(relativePath, content, expected, reason) {
   }
 }
 
+function requirePatternAbsent(relativePath, content, pattern, reason) {
+  if (pattern.test(content)) {
+    failures.push(`${relativePath}: must not contain machine-local user profile paths (${reason}).`);
+  }
+}
+
 function requireScript(scriptName, scriptValue, requiredParts) {
   if (!scriptValue) {
     failures.push(`package.json: missing script "${scriptName}".`);
@@ -354,6 +360,12 @@ requireIncludes(
   'plain-language boundary guide must stay discoverable'
 );
 requireIncludes('AGENTS.md', agentGuide, 'CODEX_RULE_ROUTER', 'AI agents must route task-specific rules');
+requirePatternAbsent(
+  'AGENTS.md',
+  agentGuide,
+  /C:[\\/]+Users[\\/]+[^\\/\s`'")]+/i,
+  'public template docs must stay portable'
+);
 
 const gateDoc = readText('docs/GIT_MERGE_GATES.md');
 requireIncludes('docs/GIT_MERGE_GATES.md', gateDoc, 'CI / verify', 'required deterministic check must be documented');

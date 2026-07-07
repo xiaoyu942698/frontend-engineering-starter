@@ -15,7 +15,10 @@ Do not bypass this file by editing from a single source file alone. If a task to
 ## CodeGraph
 
 - Before structure, entrypoint, routing, caller/callee, or impact analysis, run:
-  `powershell -ExecutionPolicy Bypass -File C:\Users\joker\.codex\scripts\ensure-codegraph-global.ps1`
+  ```powershell
+  $codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $env:USERPROFILE '.codex' }
+  powershell -ExecutionPolicy Bypass -File (Join-Path $codexHome 'scripts\ensure-codegraph-global.ps1')
+  ```
 - Use CodeGraph MCP first for project structure and code relationships.
 - Do not generate separate static code maps such as `docs/ai/code-map.md` or `module-index.md`.
 - Use `rg` only for exact text search or when CodeGraph results are insufficient.

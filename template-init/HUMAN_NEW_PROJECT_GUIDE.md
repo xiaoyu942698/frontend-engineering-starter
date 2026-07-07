@@ -28,6 +28,8 @@
 - 不要在模板仓库写业务代码。
 - 不要复制 .git、node_modules、dist、coverage、test-results。
 - 初始化新项目 Git。
+- 允许创建未提交的 apps/web/.env.local 用于本地演示登录，并写入 VITE_ENABLE_MOCK_AUTH=true。
+- 不要把 VITE_ENABLE_MOCK_AUTH=true 写入 .env.example、CI 或生产配置。
 - 安装依赖并运行验证。
 - 验证结果和未完成事项最后告诉我。
 ```
@@ -61,6 +63,8 @@
 - 不要在 frontend 目录里初始化嵌套 Git。
 - 如果业务项目根目录已有 .git，就使用根目录 Git。
 - 只把前端模板生成到前端目录。
+- 允许创建未提交的 apps/web/.env.local 用于本地演示登录，并写入 VITE_ENABLE_MOCK_AUTH=true。
+- 不要把 VITE_ENABLE_MOCK_AUTH=true 写入 .env.example、CI 或生产配置。
 - 安装依赖并在前端目录运行验证。
 - 验证结果和未完成事项最后告诉我。
 ```
@@ -81,6 +85,8 @@ Codex 不是让你手动照 README 复制文件，而是应该直接完成这些
 10. 如果你要求，再提交或推送。
 
 你不需要记 `pnpm verify`、hooks、CI 或 E2E 的细节。Codex 应该自己按模板规则完成。
+
+本地第一次打开页面如果看到 `/403`，通常是没有本地登录态。模板默认不会在 `.env.example` 里开启 mock auth；Codex 初始化时应创建未提交的 `apps/web/.env.local`，只在本机开启 `VITE_ENABLE_MOCK_AUTH=true`。
 
 ## 为什么先推荐本地创建
 

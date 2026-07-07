@@ -39,6 +39,23 @@ const bannedAgentRuntimeImports = new Set([
 const envExampleFiles = ['.env.example', 'apps/web/.env.example'];
 
 const failures = [];
+const unsafeHtmlPatterns = [
+  {
+    regex: /\bv-html\s*=/g,
+    filePattern: /\.vue$/,
+    message: 'Do not use v-html; render structured content or sanitize through an approved boundary.'
+  },
+  {
+    regex: /\b(?:innerHTML|outerHTML)\s*=/g,
+    filePattern: /\.(ts|vue)$/,
+    message: 'Do not assign HTML strings directly; render structured content or sanitize through an approved boundary.'
+  },
+  {
+    regex: /\binsertAdjacentHTML\s*\(/g,
+    filePattern: /\.(ts|vue)$/,
+    message: 'Do not inject HTML strings directly; render structured content or sanitize through an approved boundary.'
+  }
+];
 
 function toPosix(value) {
   return value.split(path.sep).join('/');
@@ -195,6 +212,18 @@ function checkCssTokens(filePath, content, offset = 0) {
   }
 }
 
+function checkUnsafeHtmlUsage(filePath, content) {
+  const relativePath = getRelative(filePath);
+
+  for (const { regex, filePattern, message } of unsafeHtmlPatterns) {
+    if (!filePattern.test(relativePath)) continue;
+
+    for (const match of content.matchAll(regex)) {
+      report(filePath, getLine(content, match.index), message);
+    }
+  }
+}
+
 function isTruthyEnvValue(value) {
   return ['1', 'true', 'yes', 'on'].includes(
     String(value ?? '')
@@ -296,6 +325,7 @@ for (const filePath of sourceFiles) {
 
   if (/\.(ts|vue)$/.test(filePath)) {
     checkArchitectureImports(filePath, content);
+    checkUnsafeHtmlUsage(filePath, content);
   }
 
   if (filePath.endsWith('.css')) {
