@@ -159,6 +159,7 @@ frontend-engineering-starter/
 
 ## 重要文档
 
+- 全部文档导航：`docs/文档导航.md`
 - 总体工程规范：`docs/FRONTEND_ENGINEERING_STANDARD.md`
 - 通俗边界说明：`docs/FRONTEND_BOUNDARY_GUIDE.md`
 - 模块脚手架说明：`docs/FRONTEND_MODULE_TEMPLATE.md`
